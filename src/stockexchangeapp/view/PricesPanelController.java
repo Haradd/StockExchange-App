@@ -7,8 +7,12 @@ package stockexchangeapp.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import stockexchangeapp.MainApp;
+import stockexchangeapp.model.Company;
 
 /**
  * FXML Controller class
@@ -19,13 +23,30 @@ public class PricesPanelController implements Initializable {
    
     private MainApp app;
     
+    @FXML
+    private TableView<Company> companyTable;
+    @FXML
+    private TableColumn<Company, String> nameColumn;
+    @FXML
+    private TableColumn<Company, String> abbreviationColumn;
+    
+
+    
     public void setApp(MainApp app){
         this.app = app;
+        companyTable.setItems(app.getCompanyData());
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Initialize the person table with the two columns.
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        abbreviationColumn.setCellValueFactory(cellData -> cellData.getValue().abbreviationProperty());
+        
+
+        // Listen for selection changes and show the person details when changed.
+    //    personTable.getSelectionModel().selectedItemProperty().addListener(
+     //           (observable, oldValue, newValue) -> showPersonDetails(newValue));
     }    
     
 }

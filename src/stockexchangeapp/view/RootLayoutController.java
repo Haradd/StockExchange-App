@@ -6,6 +6,7 @@
 package stockexchangeapp.view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 import stockexchangeapp.MainApp;
 
 /**
@@ -13,6 +14,8 @@ import stockexchangeapp.MainApp;
  * @author blazej
  */
 public class RootLayoutController {
+    
+    @FXML private TabPane tabPane;
     
     private MainApp app;
     

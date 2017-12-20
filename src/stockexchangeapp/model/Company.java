@@ -34,11 +34,13 @@ public class Company {
     private IntegerProperty sharesCount;
     private IntegerProperty volume; //during current 
     
+    private DoubleProperty change;
+    
     private StockExchange memberOfStockExchange;
    
     
     public Company(String name, String abbreviation, String chairman, String firstListingDate, Double min, Double max, Double open, Double close,
-                   Double current, Double bid, Double offer, Double turnoverValue, Double marketValue, Integer sharesCount, Integer volume,
+                   Double current, Double bid, Double offer, Double turnoverValue, Double marketValue, Integer volume, Integer sharesCount, Double change,
                    StockExchange memberOfStockExchange) {
         
         this.name = new SimpleStringProperty(name);

@@ -1,6 +1,7 @@
 package stockexchangeapp;
 
 import com.sun.javaws.Main;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,8 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import stockexchangeapp.model.Company;
@@ -31,7 +33,7 @@ import stockexchangeapp.view.RootLayoutController;
 public class MainApp extends Application {
 
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    private TabPane rootLayout;
     
     private ObservableList<Currency> currencyData = FXCollections.observableArrayList();
     private ObservableList<StockExchange> stockExchangeData  = FXCollections.observableArrayList();
@@ -41,11 +43,16 @@ public class MainApp extends Application {
     public MainApp(){
         this.currencyData.add(new Currency("Zloty", "PLN"));
         this.stockExchangeData.add(new StockExchange("Warsaw Stock Exchange", 0.05, "WSE", this.currencyData.get(0), "Poland", "Warsaw", "Książęca 4" ));
-        
+        this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 20000, 5.0, stockExchangeData.get(0)));
     }
     
     public ObservableList<Currency> getCurrencyData(){
         return currencyData;
+    }
+    
+    public ObservableList<Company> getCompanyData(){
+        return companyData;
     }
 
 
@@ -57,6 +64,7 @@ public class MainApp extends Application {
         initRootLayout();
 
         showControlPanel();
+        showPricesPanel();
     }
 
     /**
@@ -67,10 +75,7 @@ public class MainApp extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-            
-            System.out.println(rootLayout.getChildren());
-            rootLayout.getChildren();
+            rootLayout = (TabPane) loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -94,9 +99,13 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ControlPanel.fxml"));
             AnchorPane controlPanel= (AnchorPane) loader.load();
-            // Set control panel into the center of root layout.
+            
+            // Set control panel into the TabPane of root layout.       
+            Tab tab = new Tab();
+            tab.setText("Control Panel");
+            tab.setContent(controlPanel);
       
-            rootLayout.setCenter(controlPanel);
+            rootLayout.getTabs().add(tab);
             
             // Give the controller access to the main app.
             ControlPanelController controller = loader.getController();
@@ -115,8 +124,13 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("view/PricesPanel.fxml"));
             AnchorPane pricesPanel= (AnchorPane) loader.load();
             
-            // Set control panel into the center of root layout.
-            rootLayout.setCenter(pricesPanel);
+            // Set prices panel into the TabPane of root layout.                   
+            Tab tab = new Tab();
+            tab.setText("Prices & Markets");
+            tab.setContent(pricesPanel);
+      
+            rootLayout.getTabs().add(tab);
+            
             
             // Give the controller access to the main app.
             PricesPanelController controller = loader.getController();
