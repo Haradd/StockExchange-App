@@ -44,7 +44,9 @@ public class MainApp extends Application {
         this.currencyData.add(new Currency("Zloty", "PLN"));
         this.stockExchangeData.add(new StockExchange("Warsaw Stock Exchange", 0.05, "WSE", this.currencyData.get(0), "Poland", "Warsaw", "Książęca 4" ));
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
-                30000.0, 60000.0, 10000, 20000, 5.0, stockExchangeData.get(0)));
+                30000.0, 60000.0, 10000, 20000, 5.1, stockExchangeData.get(0)));
+  
+
     }
     
     public ObservableList<Currency> getCurrencyData(){
@@ -111,7 +113,6 @@ public class MainApp extends Application {
             ControlPanelController controller = loader.getController();
             controller.setApp(this);
 
-            
         } catch (IOException e) {
             e.printStackTrace();
         }

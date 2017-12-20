@@ -57,6 +57,7 @@ public class Company {
         this.turnoverValue = new SimpleDoubleProperty(turnoverValue);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
+        this.change = new SimpleDoubleProperty(change);
         this.memberOfStockExchange = memberOfStockExchange;
         
     }
@@ -239,6 +240,18 @@ public class Company {
 
     public IntegerProperty volumeProperty() {
         return volume;
+    }
+
+    public final double getChange() {
+        return change.get();
+    }
+
+    public final void setChange(double value) {
+        change.set(value);
+    }
+
+    public DoubleProperty changeProperty() {
+        return change;
     }
     
     
