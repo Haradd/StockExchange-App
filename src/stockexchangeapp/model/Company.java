@@ -33,10 +33,13 @@ public class Company {
     private DoubleProperty marketValue; //shares_count * current
     private IntegerProperty sharesCount;
     private IntegerProperty volume; //during current 
+    
+    private StockExchange memberOfStockExchange;
    
     
     public Company(String name, String abbreviation, String chairman, String firstListingDate, Double min, Double max, Double open, Double close,
-                   Double current, Double bid, Double offer, Double value, Double marketValue, Integer sharesCount, Integer volume) {
+                   Double current, Double bid, Double offer, Double value, Double marketValue, Integer sharesCount, Integer volume,
+                   StockExchange memberOfStockExchange) {
         
         this.name = new SimpleStringProperty(name);
         this.abbreviation = new SimpleStringProperty(abbreviation);
@@ -52,6 +55,7 @@ public class Company {
         this.value = new SimpleDoubleProperty(value);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
+        this.memberOfStockExchange = memberOfStockExchange;
         
     }
 
@@ -234,9 +238,14 @@ public class Company {
     public IntegerProperty volumeProperty() {
         return volume;
     }
-
     
+    public final StockExchange getStockExchange(){
+        return memberOfStockExchange;
+    }
     
+    public final void setStockExchange(StockExchange stockExchange){
+        memberOfStockExchange = stockExchange;
+    }
     
     
     
