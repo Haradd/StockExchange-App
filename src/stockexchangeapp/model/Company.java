@@ -29,10 +29,10 @@ public class Company {
     private DoubleProperty current;
     private DoubleProperty bid;
     private DoubleProperty offer;
-    private DoubleProperty value;
+    private DoubleProperty value;  // during current day, approx. volume * current
     private DoubleProperty marketValue; //shares_count * current
     private IntegerProperty sharesCount;
-    private IntegerProperty volume; 
+    private IntegerProperty volume; //during current 
    
     
     public Company(String name, String abbreviation, String chairman, String firstListingDate, Double min, Double max, Double open, Double close,
@@ -49,9 +49,195 @@ public class Company {
         this.current = new SimpleDoubleProperty(current);
         this.bid = new SimpleDoubleProperty(bid);
         this.offer = new SimpleDoubleProperty(offer);
+        this.value = new SimpleDoubleProperty(value);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
         
     }
+
+    public final String getName() {
+        return name.get();
+    }
+
+    public final void setName(String value) {
+        name.set(value);
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public final String getAbbreviation() {
+        return abbreviation.get();
+    }
+
+    public final void setAbbreviation(String value) {
+        abbreviation.set(value);
+    }
+
+    public StringProperty abbreviationProperty() {
+        return abbreviation;
+    }
+
+    public final String getChairman() {
+        return chairman.get();
+    }
+
+    public final void setChairman(String value) {
+        chairman.set(value);
+    }
+
+    public StringProperty chairmanProperty() {
+        return chairman;
+    }
+
+    public final String getFirstListingDate() {
+        return firstListingDate.get();
+    }
+
+    public final void setFirstListingDate(String value) {
+        firstListingDate.set(value);
+    }
+
+    public StringProperty firstListingDateProperty() {
+        return firstListingDate;
+    }
+
+    public final double getMin() {
+        return min.get();
+    }
+
+    public final void setMin(double value) {
+        min.set(value);
+    }
+
+    public DoubleProperty minProperty() {
+        return min;
+    }
+
+    public final double getMax() {
+        return max.get();
+    }
+
+    public final void setMax(double value) {
+        max.set(value);
+    }
+
+    public DoubleProperty maxProperty() {
+        return max;
+    }
+
+    public final double getOpen() {
+        return open.get();
+    }
+
+    public final void setOpen(double value) {
+        open.set(value);
+    }
+
+    public DoubleProperty openProperty() {
+        return open;
+    }
+
+    public final double getClose() {
+        return close.get();
+    }
+
+    public final void setClose(double value) {
+        close.set(value);
+    }
+
+    public DoubleProperty closeProperty() {
+        return close;
+    }
+
+    public final double getCurrent() {
+        return current.get();
+    }
+
+    public final void setCurrent(double value) {
+        current.set(value);
+    }
+
+    public DoubleProperty currentProperty() {
+        return current;
+    }
+
+    public final double getBid() {
+        return bid.get();
+    }
+
+    public final void setBid(double value) {
+        bid.set(value);
+    }
+
+    public DoubleProperty bidProperty() {
+        return bid;
+    }
+
+    public final double getOffer() {
+        return offer.get();
+    }
+
+    public final void setOffer(double value) {
+        offer.set(value);
+    }
+
+    public DoubleProperty offerProperty() {
+        return offer;
+    }
+
+    public final double getValue() {
+        return value.get();
+    }
+
+    public final void setValue(double value) {
+        this.value.set(value);
+    }
+
+    public DoubleProperty valueProperty() {
+        return value;
+    }
+
+    public final double getMarketValue() {
+        return marketValue.get();
+    }
+
+    public final void setMarketValue(double value) {
+        marketValue.set(value);
+    }
+
+    public DoubleProperty marketValueProperty() {
+        return marketValue;
+    }
+
+    public final int getSharesCount() {
+        return sharesCount.get();
+    }
+
+    public final void setSharesCount(int value) {
+        sharesCount.set(value);
+    }
+
+    public IntegerProperty sharesCountProperty() {
+        return sharesCount;
+    }
+
+    public final int getVolume() {
+        return volume.get();
+    }
+
+    public final void setVolume(int value) {
+        volume.set(value);
+    }
+
+    public IntegerProperty volumeProperty() {
+        return volume;
+    }
+
+    
+    
+    
+    
     
 }
