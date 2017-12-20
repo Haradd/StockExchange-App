@@ -29,7 +29,7 @@ public class Company {
     private DoubleProperty current;
     private DoubleProperty bid;
     private DoubleProperty offer;
-    private DoubleProperty value;  // during current day, approx. volume * current
+    private DoubleProperty turnoverValue;  // during current day, approx. volume * current
     private DoubleProperty marketValue; //shares_count * current
     private IntegerProperty sharesCount;
     private IntegerProperty volume; //during current 
@@ -38,7 +38,7 @@ public class Company {
    
     
     public Company(String name, String abbreviation, String chairman, String firstListingDate, Double min, Double max, Double open, Double close,
-                   Double current, Double bid, Double offer, Double value, Double marketValue, Integer sharesCount, Integer volume,
+                   Double current, Double bid, Double offer, Double turnoverValue, Double marketValue, Integer sharesCount, Integer volume,
                    StockExchange memberOfStockExchange) {
         
         this.name = new SimpleStringProperty(name);
@@ -52,7 +52,7 @@ public class Company {
         this.current = new SimpleDoubleProperty(current);
         this.bid = new SimpleDoubleProperty(bid);
         this.offer = new SimpleDoubleProperty(offer);
-        this.value = new SimpleDoubleProperty(value);
+        this.turnoverValue = new SimpleDoubleProperty(turnoverValue);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
         this.memberOfStockExchange = memberOfStockExchange;
@@ -191,16 +191,16 @@ public class Company {
         return offer;
     }
 
-    public final double getValue() {
-        return value.get();
+    public final double getTurnoverValue() {
+        return turnoverValue.get();
     }
 
-    public final void setValue(double value) {
-        this.value.set(value);
+    public final void setTurnoverValue(double value) {
+        turnoverValue.set(value);
     }
 
-    public DoubleProperty valueProperty() {
-        return value;
+    public DoubleProperty turnoverValueProperty() {
+        return turnoverValue;
     }
 
     public final double getMarketValue() {
@@ -239,14 +239,9 @@ public class Company {
         return volume;
     }
     
-    public final StockExchange getStockExchange(){
-        return memberOfStockExchange;
-    }
     
-    public final void setStockExchange(StockExchange stockExchange){
-        memberOfStockExchange = stockExchange;
-    }
     
+
     
     
 }
