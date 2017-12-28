@@ -5,7 +5,8 @@
         <group>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Company.java</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/MainApp.java</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/StockExchange.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/PriceDetailsDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/ControlPanel.fxml</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/ControlPanelController.java</file>
         </group>
     </open-files>

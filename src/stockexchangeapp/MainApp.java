@@ -1,10 +1,9 @@
 package stockexchangeapp;
 
+
 import com.sun.javaws.Main;
-import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import stockexchangeapp.model.Company;
@@ -33,7 +34,7 @@ import stockexchangeapp.view.RootLayoutController;
 public class MainApp extends Application {
 
     private Stage primaryStage;
-    private TabPane rootLayout;
+    private BorderPane rootLayout;
     
     private ObservableList<Currency> currencyData = FXCollections.observableArrayList();
     private ObservableList<StockExchange> stockExchangeData  = FXCollections.observableArrayList();
@@ -77,7 +78,7 @@ public class MainApp extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
-            rootLayout = (TabPane) loader.load();
+            rootLayout = (BorderPane) loader.load();            
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -106,8 +107,10 @@ public class MainApp extends Application {
             Tab tab = new Tab();
             tab.setText("Control Panel");
             tab.setContent(controlPanel);
-      
-            rootLayout.getTabs().add(tab);
+            
+            VBox vbox = (VBox) rootLayout.getTop();
+            TabPane tabPane = (TabPane) vbox.getChildren().get(1);
+            tabPane.getTabs().add(tab);
             
             // Give the controller access to the main app.
             ControlPanelController controller = loader.getController();
@@ -130,8 +133,9 @@ public class MainApp extends Application {
             tab.setText("Prices & Markets");
             tab.setContent(pricesPanel);
       
-            rootLayout.getTabs().add(tab);
-            
+            VBox vbox = (VBox) rootLayout.getTop();
+            TabPane tabPane = (TabPane) vbox.getChildren().get(1);
+            tabPane.getTabs().add(tab);            
             
             // Give the controller access to the main app.
             PricesPanelController controller = loader.getController();
@@ -142,65 +146,9 @@ public class MainApp extends Application {
         }
     }
     
-    public boolean showCurrencyFormDialog(Currency currency) {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/CurrencyFormDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Currency");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            // Set the currency into the controller.
-            CurrencyFormDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            controller.setCurrency(currency);
-            
-            // Set the dialog icon.
-            //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-
-            return controller.isOkClicked();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-    
-    
-    private Initializable replaceSceneContent(String fxml) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        InputStream in = Main.class.getResourceAsStream(fxml);
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(Main.class.getResource(fxml));
-        AnchorPane page;
-        try {
-            page = (AnchorPane) loader.load(in);
-        } finally {
-            in.close();
-        } 
-        Scene scene = new Scene(page, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.sizeToScene();
-        return (Initializable) loader.getController();
-    }
-
-    /**
-     * Returns the main stage.
-     * @return
-     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
-    
     
     public static void main(String[] args) {
         launch(args);
