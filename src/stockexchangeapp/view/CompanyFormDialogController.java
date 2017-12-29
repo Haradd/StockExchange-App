@@ -84,6 +84,7 @@ public class CompanyFormDialogController implements Initializable {
             company.setAbbreviation(abbreviationField.getText());
             company.setChairman(chairmanField.getText());
             company.setStockExchangeBelonging(stockComboBox.getSelectionModel().getSelectedItem());
+            stockComboBox.getSelectionModel().getSelectedItem().addCompanyToCompanies(company);
             
             Date date = Calendar.getInstance().getTime();
             SimpleDateFormat simpleDate = new SimpleDateFormat("MM.yyyy");
