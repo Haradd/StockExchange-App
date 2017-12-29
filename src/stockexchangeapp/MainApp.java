@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
+import stockexchangeapp.model.Investor;
 import stockexchangeapp.model.StockExchange;
 import stockexchangeapp.view.ControlPanelController;
 import stockexchangeapp.view.PricesPanelController;
@@ -35,6 +36,7 @@ public class MainApp extends Application {
     private ObservableList<Currency> currencyData = FXCollections.observableArrayList();
     private ObservableList<StockExchange> stockExchangeData  = FXCollections.observableArrayList();
     private ObservableList<Company> companyData  = FXCollections.observableArrayList();
+    private ObservableList<Investor> investorData  = FXCollections.observableArrayList();
     
     private Set<String> abbreviationsSet = new HashSet<String>();
 
@@ -45,6 +47,8 @@ public class MainApp extends Application {
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
                 30000.0, 60000.0, 10000, 20000, 5.1, stockExchangeData.get(0)));
         abbreviationsSet.add("TPE");
+        
+        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 10000.0));
         
     }
     
@@ -58,6 +62,10 @@ public class MainApp extends Application {
     
     public ObservableList<Company> getCompanyData(){
         return companyData;
+    }
+    
+    public ObservableList<Investor> getInvestorData(){
+        return investorData;
     }
     
     public Set<String> getAbbreviationsSet(){

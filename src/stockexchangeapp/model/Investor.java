@@ -7,6 +7,8 @@ package stockexchangeapp.model;
 
 import java.util.HashMap;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -22,10 +24,11 @@ public class Investor {
     private HashMap<Company, Integer> shares;
     
     public Investor(String firstName, String lastName, String id, Double budget) {
-        this.firstName.set(firstName);
-        this.lastName.set(lastName);
-        this.id.set(id);
-        this.budget.set(budget);
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.id = new SimpleStringProperty(id);
+        this.budget = new SimpleDoubleProperty(budget);
+        this.shares = new HashMap<Company, Integer>();
     }
     
     public Investor() {
@@ -78,6 +81,10 @@ public class Investor {
 
     public DoubleProperty budgetProperty() {
         return budget;
+    }
+    
+    public HashMap<Company, Integer> getShares() {
+        return shares;
     }
     
     
