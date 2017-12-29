@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import stockexchangeapp.MainApp;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
+import stockexchangeapp.model.StockExchange;
 
 /**
  * FXML Controller class
@@ -65,6 +66,18 @@ public class ControlPanelController implements Initializable {
         }
         
     }
+
+    @FXML
+    private void  handleNewStockExchange() {
+        StockExchange tempStockExchange = new StockExchange();
+        boolean okClicked = showStockExchangeFormDialog(tempStockExchange);
+        if (okClicked) {
+            app.getStockExchangeData().add(tempStockExchange);
+            System.out.println(app.getStockExchangeData());
+        }
+        
+    }
+    
     
     public boolean showCurrencyFormDialog(Currency currency) {
         try {
@@ -99,7 +112,7 @@ public class ControlPanelController implements Initializable {
         }
     }
     
-        public boolean showCompanyFormDialog(Company company) {
+    public boolean showCompanyFormDialog(Company company) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -120,6 +133,40 @@ public class ControlPanelController implements Initializable {
             controller.setApp(app);
 
             controller.setCompanyFields(company);
+            
+            // Set the dialog icon.
+            //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean showStockExchangeFormDialog(StockExchange stockExchange) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/StockExchangeFormDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New StockExchange");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(app.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the currency into the controller.
+            StockExchangeFormDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setApp(app);
+            controller.setStockExchangeFields(stockExchange);
             
             // Set the dialog icon.
             //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));

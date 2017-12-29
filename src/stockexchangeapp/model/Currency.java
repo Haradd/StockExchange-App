@@ -29,6 +29,10 @@ public class Currency {
         this(null, null);
     }
     
+    public String toString(){
+        return this.getCode();
+    }
+    
     public void setName(String name){
         this.name.set(name);
     }

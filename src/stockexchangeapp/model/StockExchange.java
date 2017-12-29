@@ -36,6 +36,10 @@ public class StockExchange extends Market {
         
     }
     
+    public StockExchange(){
+        this(null, 0.0, null, null, null, null, null);
+    }
+    
     public String toString() {
         return this.getName();
     }

@@ -26,7 +26,7 @@
           <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="plusButton" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="  add Stock Exchange" />
+            <Button fx:id="plusButton" mnemonicParsing="false" onAction="#handleNewStockExchange" prefHeight="43.0" prefWidth="215.0" text="  add Stock Exchange" />
             <ImageView fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/plus-icon.png" />
