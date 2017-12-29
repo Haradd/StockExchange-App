@@ -60,6 +60,7 @@ public class ControlPanelController implements Initializable {
         boolean okClicked = showCompanyFormDialog(tempCompany);
         if (okClicked) {
             app.getCompanyData().add(tempCompany);
+            app.getAbbreviationsSet().add(tempCompany.getAbbreviation());
             System.out.println(app.getCompanyData());
         }
         
@@ -116,7 +117,9 @@ public class ControlPanelController implements Initializable {
             // Set the currency into the controller.
             CompanyFormDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setCompany(company, app);
+            controller.setApp(app);
+
+            controller.setCompanyFields(company);
             
             // Set the dialog icon.
             //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));

@@ -1,28 +1,24 @@
 package stockexchangeapp;
 
 
-import com.sun.javaws.Main;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
 import stockexchangeapp.model.StockExchange;
 import stockexchangeapp.view.ControlPanelController;
-import stockexchangeapp.view.CurrencyFormDialogController;
 import stockexchangeapp.view.PricesPanelController;
 import stockexchangeapp.view.RootLayoutController;
 
@@ -39,6 +35,8 @@ public class MainApp extends Application {
     private ObservableList<Currency> currencyData = FXCollections.observableArrayList();
     private ObservableList<StockExchange> stockExchangeData  = FXCollections.observableArrayList();
     private ObservableList<Company> companyData  = FXCollections.observableArrayList();
+    
+    private Set<String> abbreviationsSet = new HashSet<String>();
 
     
     public MainApp(){
@@ -46,6 +44,7 @@ public class MainApp extends Application {
         this.stockExchangeData.add(new StockExchange("Warsaw Stock Exchange", 0.05, "WSE", this.currencyData.get(0), "Poland", "Warsaw", "Książęca 4" ));
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
                 30000.0, 60000.0, 10000, 20000, 5.1, stockExchangeData.get(0)));
+        abbreviationsSet.add("TPE");
   
 
     }
@@ -60,6 +59,10 @@ public class MainApp extends Application {
     
     public ObservableList<Company> getCompanyData(){
         return companyData;
+    }
+    
+    public Set<String> getAbbreviationsSet(){
+        return abbreviationsSet;
     }
 
 

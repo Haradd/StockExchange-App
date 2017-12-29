@@ -62,12 +62,15 @@ public class CompanyFormDialogController implements Initializable {
        // this.dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
     }
     
-        public void setCompany(Company company, MainApp app) {
+        public void setCompanyFields(Company company) {
             this.company = company;
+            
             nameField.setText(company.getName());
+            abbreviationField.setText(company.getAbbreviation());
+            chairmanField.setText(company.getChairman());
+    
             stockComboBox.setItems(app.getStockExchangeData());
             stockComboBox.getSelectionModel().selectFirst();
-
      }
         
     public boolean isOkClicked() {
@@ -89,9 +92,23 @@ public class CompanyFormDialogController implements Initializable {
             int min = 1;
             int max = 50; 
             double random = ThreadLocalRandom.current().nextDouble(min, max);
+            int randomInt = ThreadLocalRandom.current().nextInt(min, max);
+
             
-            System.out.println(random);
-           
+            company.setMin(random - 0.5);
+            company.setMax(random + 0.5);
+            company.setOpen(random);
+            company.setClose(random);
+            company.setCurrent(random);
+            company.setBid(random - 0.1);
+            company.setOffer(random + 0.1);
+            company.setVolume(randomInt);
+            company.setSharesCount(randomInt);
+            company.setTurnoverValue(company.getCurrent() * company.getVolume());
+            company.setMarketValue(company.getCurrent() * company.getVolume());            
+            company.setChange(1.0);
+            
+            
             
             okClicked = true;
             dialogStage.close();  
@@ -111,6 +128,18 @@ public class CompanyFormDialogController implements Initializable {
 
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "Company name can't be empty\n"; 
+        }
+        
+        if (abbreviationField.getText() == null || abbreviationField.getText().length() == 0  ){
+            errorMessage += "Company abbreviation can't be empty\n";
+        }
+        
+        if (chairmanField.getText() == null || chairmanField.getText().length() == 0  ){
+            errorMessage += "Company chairman can't be empty\n";
+        }
+        
+        if (app.getAbbreviationsSet().contains(abbreviationField.getText())){
+            errorMessage += "This abbreviation already exists!\n";
         }
         
         if (errorMessage.length() == 0) {
