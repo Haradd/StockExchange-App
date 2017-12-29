@@ -24,5 +24,30 @@ public class Market {
         this.fee = new SimpleDoubleProperty(fee);
         
     }
+
+    public final String getName() {
+        return name.get();
+    }
+
+    public final void setName(String value) {
+        name.set(value);
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public final double getFee() {
+        return fee.get();
+    }
+
+    public final void setFee(double value) {
+        fee.set(value);
+    }
+
+    public DoubleProperty feeProperty() {
+        return fee;
+    }
    
+    
 }

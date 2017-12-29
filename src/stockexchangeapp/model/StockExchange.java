@@ -35,6 +35,10 @@ public class StockExchange extends Market {
         this.companies = new ArrayList<Company>();
         
     }
+    
+    public String toString() {
+        return this.getName();
+    }
 
     public final String getSymbol() {
         return symbol.get();

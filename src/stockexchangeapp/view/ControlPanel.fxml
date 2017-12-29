@@ -36,7 +36,7 @@
                </GridPane.margin>
             </ImageView>
             <Button fx:id="plusButton1" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="add Index" GridPane.rowIndex="1" />
-            <Button layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleNewCurrency" prefHeight="43.0" prefWidth="215.0" text="add Currency" GridPane.columnIndex="1" />
+            <Button fx:id="newCurrency" layoutX="10.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleNewCurrency" prefHeight="43.0" prefWidth="215.0" text="add Currency" GridPane.columnIndex="1" />
             <Button fx:id="plusButton2" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="    add Commodity" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets />
@@ -44,7 +44,7 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-            <Button fx:id="plusButton3" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="add Company" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="newCompany" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleNewCompany" prefHeight="43.0" prefWidth="215.0" text="add Company" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="plusButton4" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="add Investor" GridPane.rowIndex="2" />
             <ImageView fitHeight="33.0" fitWidth="39.0" layoutX="20.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>

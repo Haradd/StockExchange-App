@@ -61,6 +61,10 @@ public class Company {
         this.memberOfStockExchange = memberOfStockExchange;
         
     }
+    
+    public Company() {
+        this(null, null, null, null, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0.0, null);
+    }
 
     public final String getName() {
         return name.get();
@@ -252,6 +256,14 @@ public class Company {
 
     public DoubleProperty changeProperty() {
         return change;
+    }
+    
+    public final StockExchange getStockExchangeBelonging () {
+        return memberOfStockExchange;
+    }
+    
+    public final void setStockExchangeBelonging(StockExchange stockExchange) {
+        memberOfStockExchange = stockExchange;
     }
     
     

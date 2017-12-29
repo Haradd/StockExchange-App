@@ -54,6 +54,10 @@ public class MainApp extends Application {
         return currencyData;
     }
     
+    public ObservableList<StockExchange> getStockExchangeData(){
+        return stockExchangeData;
+    }
+    
     public ObservableList<Company> getCompanyData(){
         return companyData;
     }

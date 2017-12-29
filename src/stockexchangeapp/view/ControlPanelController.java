@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import stockexchangeapp.MainApp;
+import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
 
 /**
@@ -33,25 +34,35 @@ public class ControlPanelController implements Initializable {
     
     @FXML
     Button newCurrency;
+    
+    @FXML
+    Button newCompany;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
-    
-    
 
     @FXML
     private void handleNewCurrency() {
         Currency tempCurrency = new Currency();
         boolean okClicked = showCurrencyFormDialog(tempCurrency);
         if (okClicked) {
-            System.out.println("click");
             app.getCurrencyData().add(tempCurrency);
             System.out.println(app.getCurrencyData());
         }
+    }
+    
+    @FXML
+    private void  handleNewCompany() {
+        Company tempCompany = new Company();
+        boolean okClicked = showCompanyFormDialog(tempCompany);
+        if (okClicked) {
+            app.getCompanyData().add(tempCompany);
+            System.out.println(app.getCompanyData());
+        }
+        
     }
     
     public boolean showCurrencyFormDialog(Currency currency) {
@@ -86,5 +97,39 @@ public class ControlPanelController implements Initializable {
             return false;
         }
     }
+    
+        public boolean showCompanyFormDialog(Company company) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CompanyFormDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Company");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(app.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the currency into the controller.
+            CompanyFormDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCompany(company, app);
+            
+            // Set the dialog icon.
+            //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     
 }
