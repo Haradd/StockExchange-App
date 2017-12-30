@@ -48,7 +48,7 @@ public class MainApp extends Application {
                 30000.0, 60000.0, 10000, 20000, 5.1, stockExchangeData.get(0)));
         abbreviationsSet.add("TPE");
         
-        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 10000.0));
+        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 10000.0, stockExchangeData.get(0)));
         
     }
     

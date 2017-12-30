@@ -21,18 +21,21 @@ public class Investor {
     private StringProperty id;
     private DoubleProperty budget;
     
+    private StockExchange memberOfStockExchange;
+    
     private HashMap<Company, Integer> shares;
     
-    public Investor(String firstName, String lastName, String id, Double budget) {
+    public Investor(String firstName, String lastName, String id, Double budget, StockExchange memberOfStockExchange) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.id = new SimpleStringProperty(id);
         this.budget = new SimpleDoubleProperty(budget);
-        this.shares = new HashMap<Company, Integer>();
+        this.shares = new HashMap<>();
+        this.memberOfStockExchange = memberOfStockExchange;
     }
     
     public Investor() {
-        this(null, null, null, 0.0);
+        this(null, null, null, 0.0, null);
     }
 
     public final String getFirstName() {
@@ -85,6 +88,15 @@ public class Investor {
     
     public HashMap<Company, Integer> getShares() {
         return shares;
+    }
+    
+    
+    public final StockExchange getStockExchangeBelonging () {
+        return memberOfStockExchange;
+    }
+    
+    public final void setStockExchangeBelonging(StockExchange stockExchange) {
+        memberOfStockExchange = stockExchange;
     }
     
     

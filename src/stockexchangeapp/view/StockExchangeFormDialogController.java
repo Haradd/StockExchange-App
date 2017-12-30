@@ -119,7 +119,7 @@ public class StockExchangeFormDialogController implements Initializable {
             errorMessage += "Stock Exchange symbol can't be empty\n"; 
         }
         
-        if (feeField.getText() == null || feeField.getText().length() == 0) {
+        if (feeField.getText() == null || Double.parseDouble(feeField.getText()) == 0.0) {
             errorMessage += "Stock Exchange fee can't be empty\n"; 
         }
         

@@ -26,7 +26,7 @@
           <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="plusButton" mnemonicParsing="false" onAction="#handleNewStockExchange" prefHeight="43.0" prefWidth="215.0" text="  add Stock Exchange" />
+            <Button fx:id="newStockExchange" mnemonicParsing="false" onAction="#handleNewStockExchange" prefHeight="43.0" prefWidth="215.0" text="  add Stock Exchange" />
             <ImageView fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/plus-icon.png" />
@@ -45,7 +45,7 @@
                   <Insets />
                </opaqueInsets></Button>
             <Button fx:id="newCompany" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleNewCompany" prefHeight="43.0" prefWidth="215.0" text="add Company" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="plusButton4" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="215.0" text="add Investor" GridPane.rowIndex="2" />
+            <Button fx:id="newInvestor" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleNewInvestor" prefHeight="43.0" prefWidth="215.0" text="add Investor" GridPane.rowIndex="2" />
             <ImageView fitHeight="33.0" fitWidth="39.0" layoutX="20.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/plus-icon.png" />

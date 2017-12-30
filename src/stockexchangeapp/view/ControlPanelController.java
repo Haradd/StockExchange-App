@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import stockexchangeapp.MainApp;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
+import stockexchangeapp.model.Investor;
 import stockexchangeapp.model.StockExchange;
 
 /**
@@ -35,9 +36,12 @@ public class ControlPanelController implements Initializable {
     
     @FXML
     Button newCurrency;
-    
     @FXML
     Button newCompany;
+    @FXML
+    Button newStockExchange;
+    @FXML
+    Button newInvestor;
 
 
     @Override
@@ -74,6 +78,17 @@ public class ControlPanelController implements Initializable {
         if (okClicked) {
             app.getStockExchangeData().add(tempStockExchange);
             System.out.println(app.getStockExchangeData());
+        }
+        
+    }
+    
+    @FXML
+    private void  handleNewInvestor() {
+        Investor tempInvestor = new Investor();
+        boolean okClicked = showInvestorFormDialog(tempInvestor);
+        if (okClicked) {
+            app.getInvestorData().add(tempInvestor);
+            System.out.println(app.getInvestorData());
         }
         
     }
@@ -181,5 +196,39 @@ public class ControlPanelController implements Initializable {
         }
     }
     
+    public boolean showInvestorFormDialog(Investor investor) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/InvestorFormDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Investor");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(app.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the currency into the controller.
+            InvestorFormDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setApp(app);
+
+            controller.setInvestorFields(investor);
+            
+            // Set the dialog icon.
+            //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
 }
