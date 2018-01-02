@@ -1,21 +1,28 @@
 package stockexchangeapp;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import stockexchangeapp.model.Company;
+import stockexchangeapp.model.XmlDataWrapper;
 import stockexchangeapp.model.Currency;
 import stockexchangeapp.model.Investor;
 import stockexchangeapp.model.StockExchange;
@@ -159,6 +166,112 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
+        /**
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     * 
+     * @return
+     */
+    public File getFilePath() {
+        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        String filePath = prefs.get("filePath", null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     * 
+     * @param file the file or null to remove the path
+     */
+    public void setFilePath(File file) {
+        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+        if (file != null) {
+            prefs.put("filePath", file.getPath());
+            primaryStage.setTitle("StockExchangeApp - " + file.getName());
+        } else {
+            prefs.remove("filePath");
+            primaryStage.setTitle("StockExchangeApp");
+        }
+    }
+    
+   
+    public void loadDataFromFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(XmlDataWrapper.class);
+            Unmarshaller um = context.createUnmarshaller();
+
+            // Reading XML from the file and unmarshalling.
+            XmlDataWrapper wrapper = (XmlDataWrapper) um.unmarshal(file);
+            
+            currencyData.clear();
+            currencyData.addAll(wrapper.getCurrencies());
+
+            companyData.clear();
+            companyData.addAll(wrapper.getCompanies());
+            companyData.forEach((company) -> {
+                abbreviationsSet.add(company.getAbbreviation());
+                //odpal wątek
+            });
+            
+            stockExchangeData.clear();
+            stockExchangeData.addAll(wrapper.getStockExchanges());
+            
+           investorData.clear();
+           investorData.addAll(wrapper.getInvestors());
+           investorData.forEach((investor) -> {
+               //odpal wątek
+           });
+
+            // Save the file path to the registry.
+            setFilePath(file);
+
+        } catch (Exception e) {
+        	Alert alert = new Alert(Alert.AlertType.ERROR);
+        	alert.setTitle("Error");
+        	alert.setHeaderText("Could not load data");
+        	alert.setContentText("Could not load data from file:\n" + file.getPath());
+        	
+        	alert.showAndWait();
+        }
+    }
+
+    public void saveDataToFile(File file) {
+        try {
+            JAXBContext context = JAXBContext
+                    .newInstance(XmlDataWrapper.class);
+            Marshaller m = context.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            // Wrapping data.
+            XmlDataWrapper wrapper = new XmlDataWrapper();
+            wrapper.setCurrencies(currencyData);
+            wrapper.setCompanies(companyData);
+            wrapper.setStockExchanges(stockExchangeData);
+            wrapper.setInvestors(investorData);
+
+            // Marshalling and saving XML to the file.
+            m.marshal(wrapper, file);
+
+            // Save the file path to the registry.
+            setFilePath(file);
+        } catch (Exception e) { // catches ANY exception
+        	Alert alert = new Alert(Alert.AlertType.ERROR);
+        	alert.setTitle("Error");
+        	alert.setHeaderText("Could not save data");
+        	alert.setContentText("Could not save data to file:\n" + file.getPath());
+        	
+        	alert.showAndWait();
+        }
+    }
+
     
     public Stage getPrimaryStage() {
         return primaryStage;

@@ -93,6 +93,7 @@ public class CompanyFormDialogController implements Initializable {
             int min = 1;
             int max = 50; 
             double random = ThreadLocalRandom.current().nextDouble(min, max);
+            random = (double) Math.round(random * 100) / 100;
             int randomInt = ThreadLocalRandom.current().nextInt(min, max);
 
             

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persons>
+    <company>
+        <abbreviation>TPE</abbreviation>
+        <bid>3.1</bid>
+        <chairman>Filip Grzegorczyk</chairman>
+        <change>5.1</change>
+        <close>3.4</close>
+        <current>3.3</current>
+        <firstListingDate>06.2010</firstListingDate>
+        <marketValue>60000.0</marketValue>
+        <max>3.5</max>
+        <min>3.0</min>
+        <name>TAURON Polska Energia S.A.</name>
+        <offer>3.5</offer>
+        <open>3.1</open>
+        <sharesCount>20000</sharesCount>
+        <stockExchangeBelonging>
+            <fee>0.05</fee>
+            <name>Warsaw Stock Exchange</name>
+            <address>Książęca 4</address>
+            <city>Warsaw</city>
+            <country>Poland</country>
+            <currency>
+                <code>PLN</code>
+                <name>Zloty</name>
+            </currency>
+            <symbol>WSE</symbol>
+        </stockExchangeBelonging>
+        <turnoverValue>30000.0</turnoverValue>
+        <volume>10000</volume>
+    </company>
+    <company>
+        <abbreviation>tt</abbreviation>
+        <bid>49.03910858746678</bid>
+        <chairman>t</chairman>
+        <change>1.0</change>
+        <close>49.13910858746678</close>
+        <current>49.13910858746678</current>
+        <firstListingDate>01.2018</firstListingDate>
+        <marketValue>1916.4252349112044</marketValue>
+        <max>49.63910858746678</max>
+        <min>48.63910858746678</min>
+        <name>t</name>
+        <offer>49.23910858746678</offer>
+        <open>49.13910858746678</open>
+        <sharesCount>39</sharesCount>
+        <stockExchangeBelonging>
+            <fee>0.05</fee>
+            <name>Warsaw Stock Exchange</name>
+            <address>Książęca 4</address>
+            <city>Warsaw</city>
+            <country>Poland</country>
+            <currency>
+                <code>PLN</code>
+                <name>Zloty</name>
+            </currency>
+            <symbol>WSE</symbol>
+        </stockExchangeBelonging>
+        <turnoverValue>1916.4252349112044</turnoverValue>
+        <volume>39</volume>
+    </company>
+</persons>

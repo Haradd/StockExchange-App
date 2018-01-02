@@ -85,7 +85,6 @@ public class PricesPanelController implements Initializable {
 
                     // Show the dialog and wait until the user closes it
                     dialogStage.showAndWait();
-
                     
                 } catch (IOException e) {
                     e.printStackTrace();
