@@ -55,6 +55,7 @@ public class Company {
         this.bid = new SimpleDoubleProperty(bid);
         this.offer = new SimpleDoubleProperty(offer);
         this.turnoverValue = new SimpleDoubleProperty(turnoverValue);
+        this.marketValue = new SimpleDoubleProperty(marketValue);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
         this.change = new SimpleDoubleProperty(change);
