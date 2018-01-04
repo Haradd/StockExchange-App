@@ -29,7 +29,6 @@ public class RootLayoutController {
     @FXML
     private void handleGoToPrices(){
         app.showPricesPanel();
-        
     }
     
     @FXML
@@ -43,9 +42,6 @@ public class RootLayoutController {
         app.setFilePath(null);
     }
 
-    /**
-     * Opens a FileChooser to let the user select an address book to load.
-     */
     @FXML
     private void handleOpen() {
         FileChooser fileChooser = new FileChooser();
@@ -63,10 +59,6 @@ public class RootLayoutController {
         }
     }
 
-    /**
-     * Saves the file to the person file that is currently open. If there is no
-     * open file, the "save as" dialog is shown.
-     */
     @FXML
     private void handleSave() {
         File personFile = app.getFilePath();
@@ -77,9 +69,6 @@ public class RootLayoutController {
         }
     }
 
-    /**
-     * Opens a FileChooser to let the user select a file to save to.
-     */
     @FXML
     private void handleSaveAs() {
         FileChooser fileChooser = new FileChooser();
@@ -101,9 +90,6 @@ public class RootLayoutController {
         }
     }
 
-    /**
-     * Opens an about dialog.
-     */
     @FXML
     private void handleAbout() {
     	Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -114,4 +100,8 @@ public class RootLayoutController {
     	alert.showAndWait();
     }
     
+    @FXML
+    private void handleExit() {
+        System.exit(0);
+    }
 }

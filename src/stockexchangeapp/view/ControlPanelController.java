@@ -88,6 +88,7 @@ public class ControlPanelController implements Initializable {
         boolean okClicked = showInvestorFormDialog(tempInvestor);
         if (okClicked) {
             app.getInvestorData().add(tempInvestor);
+            new Thread(tempInvestor).start();
             System.out.println(app.getInvestorData());
         }
         

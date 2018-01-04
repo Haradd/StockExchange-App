@@ -64,16 +64,16 @@ public class InvestorFormDialogController implements Initializable {
        // this.dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
     }
     
-        public void setInvestorFields(Investor investor) {
-            this.investor = investor;
+    public void setInvestorFields(Investor investor) {
+        this.investor = investor;
             
-            firstNameField.setText(investor.getFirstName());
-            lastNameField.setText(investor.getLastName());
-            budgetField.setText(String.valueOf(investor.getBudget()));
-            idField.setText(investor.getId());
+        firstNameField.setText(investor.getFirstName());
+        lastNameField.setText(investor.getLastName());
+        budgetField.setText(String.valueOf(investor.getBudget()));
+        idField.setText(investor.getId());
     
-            stockComboBox.setItems(app.getStockExchangeData());
-            stockComboBox.getSelectionModel().selectFirst();
+        stockComboBox.setItems(app.getStockExchangeData());
+        stockComboBox.getSelectionModel().selectFirst();
      }
         
     public boolean isOkClicked() {
@@ -92,8 +92,6 @@ public class InvestorFormDialogController implements Initializable {
             okClicked = true;
             dialogStage.close();  
         }
-
-
     }
 
 
