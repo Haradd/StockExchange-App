@@ -51,7 +51,6 @@ public class PricesPanelController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Initialize the person table with the two columns.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         abbreviationColumn.setCellValueFactory(cellData -> cellData.getValue().abbreviationProperty());
         currentPriceColumn.setCellValueFactory(cellData -> cellData.getValue().currentProperty().asObject());
@@ -79,6 +78,7 @@ public class PricesPanelController implements Initializable {
                     // Set the currency into the controller.
                     PriceDetailsDialogController controller = loader.getController();
                     controller.setDialogStage(dialogStage);
+                    controller.setCompanyFields(companyTable.getSelectionModel().getSelectedItem());
 
                     // Set the dialog icon.
                     //dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
