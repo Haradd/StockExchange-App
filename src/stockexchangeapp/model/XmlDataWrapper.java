@@ -14,12 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author blazej
  */
 
-/**
- * Helper class to wrap a list of persons. This is used for saving the
- * list of persons to XML.
- * 
- */
-@XmlRootElement(name = "persons")
+@XmlRootElement(name = "Economy")
 public class XmlDataWrapper {
 
     private List<Currency> currencies;
