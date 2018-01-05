@@ -11,10 +11,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import stockexchangeapp.MainApp;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.Currency;
@@ -29,11 +35,7 @@ import stockexchangeapp.model.StockExchange;
 public class ControlPanelController implements Initializable {
     
     private MainApp app;
-    
-    public void setApp(MainApp app){
-        this.app = app;
-    }
-    
+        
     @FXML
     Button newCurrency;
     @FXML
@@ -42,11 +44,35 @@ public class ControlPanelController implements Initializable {
     Button newStockExchange;
     @FXML
     Button newInvestor;
+    
+    @FXML
+    private TableView<StockExchange> stockExchangeTable;
+    @FXML
+    private TableColumn<StockExchange, String> stockExchangeNameColumn;
+    @FXML
+    private TableView<Company> companyTable;
+    @FXML
+    private TableColumn<Company, String> companyNameColumn;
+    @FXML
+    private TableView<Investor> investorTable;
+    @FXML
+    private TableColumn<Investor,String> investorNameColumn;
+    
+    public void setApp(MainApp app){
+        this.app = app;
+        stockExchangeTable.setItems(app.getStockExchangeData());
+        companyTable.setItems(app.getCompanyData());
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        stockExchangeNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        companyNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+
+        
+  
     }    
 
     @FXML
@@ -62,15 +88,35 @@ public class ControlPanelController implements Initializable {
     @FXML
     private void  handleNewCompany() {
         Company tempCompany = new Company();
-        boolean okClicked = showCompanyFormDialog(tempCompany);
+        boolean okClicked = showCompanyFormDialog(tempCompany, "new");
         if (okClicked) {
             app.getCompanyData().add(tempCompany);
             app.getAbbreviationsSet().add(tempCompany.getAbbreviation());
-            System.out.println(app.getCompanyData());
-        }
-        
+            new Thread(tempCompany).start();
+            System.out.println("added company: " + tempCompany.getName());
+        }       
     }
-
+    @FXML
+    private void handleEditCompany() {
+        Company selectedCompany = companyTable.getSelectionModel().getSelectedItem();
+        if (selectedCompany != null) {
+            boolean okClicked = showCompanyFormDialog(selectedCompany, "edit");
+            if (okClicked) {
+                companyNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            }
+        } else showAlert("Please select a Company in the table.");
+    }
+    @FXML
+    private void handleDeleteCompany() {
+        Company selectedCompany = companyTable.getSelectionModel().getSelectedItem();
+        if (selectedCompany != null) {
+            app.getCompanyData().remove(selectedCompany);
+            selectedCompany.getStockExchangeBelonging().getCompanies().remove(selectedCompany);
+            selectedCompany.buyAllShares();
+            selectedCompany.terminate();
+            companyNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        } else showAlert("Please select a Company in the table.");
+    }
     @FXML
     private void  handleNewStockExchange() {
         StockExchange tempStockExchange = new StockExchange();
@@ -79,7 +125,6 @@ public class ControlPanelController implements Initializable {
             app.getStockExchangeData().add(tempStockExchange);
             System.out.println(app.getStockExchangeData());
         }
-        
     }
     
     @FXML
@@ -89,9 +134,8 @@ public class ControlPanelController implements Initializable {
         if (okClicked) {
             app.getInvestorData().add(tempInvestor);
             new Thread(tempInvestor).start();
-            System.out.println(app.getInvestorData());
-        }
-        
+            System.out.println("added investor: " + tempInvestor.getId() + " " + tempInvestor.getFirstName() + tempInvestor.getLastName());
+        }   
     }
     
     
@@ -128,7 +172,7 @@ public class ControlPanelController implements Initializable {
         }
     }
     
-    public boolean showCompanyFormDialog(Company company) {
+    public boolean showCompanyFormDialog(Company company, String type) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -147,7 +191,7 @@ public class ControlPanelController implements Initializable {
             CompanyFormDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setApp(app);
-
+            controller.setType(type);
             controller.setCompanyFields(company);
             
             // Set the dialog icon.
@@ -230,6 +274,15 @@ public class ControlPanelController implements Initializable {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initOwner(app.getPrimaryStage());
+        alert.setTitle("No Selection");
+        alert.setHeaderText(message);
+            
+        alert.showAndWait();
     }
     
 }

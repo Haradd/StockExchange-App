@@ -53,6 +53,8 @@ public class PriceDetailsDialogController implements Initializable {
     private Label abbreviation;
     @FXML
     private Label firstListingDate;
+    @FXML
+    private Label memberOfStockExchange;
     
     @FXML
     private LineChart<?,?> lineChart;
@@ -86,12 +88,13 @@ public class PriceDetailsDialogController implements Initializable {
         currentPrice.setText(String.valueOf(company.getCurrent()));
         
         double change = company.getChange();
+        change = (double) Math.round(change * 100) / 100;
         if (change > 0) {
-            String changeText = "+" + String.valueOf(company.getChange()) + "%";
+            String changeText = "+" + String.valueOf(change) + "%";
             changeFXML.setText(changeText);
             changeFXML.setStyle("-fx-text-fill: green;");
         } else {
-            String changeText = "-" + String.valueOf(company.getChange()) + "%";
+            String changeText = String.valueOf(change) + "%";
             changeFXML.setText(changeText);
             changeFXML.setStyle("-fx-text-fill: red;");
         }
@@ -106,14 +109,16 @@ public class PriceDetailsDialogController implements Initializable {
         chairman.setText(company.getChairman());
         abbreviation.setText(company.getAbbreviation());
         firstListingDate.setText(company.getFirstListingDate());
+        memberOfStockExchange.setText(company.getStockExchangeBelonging().getName());
         
         XYChart.Series series = new XYChart.Series();
         
-        for(int i = 5; i<100; i+=3){
-            series.getData().add(new XYChart.Data(String.valueOf(i), i+5));
-            lineChart.getData().addAll(series);
-        }
+        company.getTransactionList().forEach((transaction) -> {
+            series.getData().add(new XYChart.Data<String, Double>(transaction.getTime(), transaction.getPrice()));
+        });
         
+        lineChart.getData().add(series);
+               
    
         
     }

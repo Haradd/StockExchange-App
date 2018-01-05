@@ -41,6 +41,7 @@ public class CompanyFormDialogController implements Initializable {
     private Stage dialogStage;
     private Company company;
     private boolean okClicked = false;
+    private String type;
     
     private MainApp app;
     
@@ -60,6 +61,10 @@ public class CompanyFormDialogController implements Initializable {
         
         // Set the dialog icon.
        // this.dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
     
         public void setCompanyFields(Company company) {
@@ -83,33 +88,35 @@ public class CompanyFormDialogController implements Initializable {
             company.setName(nameField.getText());
             company.setAbbreviation(abbreviationField.getText());
             company.setChairman(chairmanField.getText());
-            company.setStockExchangeBelonging(stockComboBox.getSelectionModel().getSelectedItem());
-            stockComboBox.getSelectionModel().getSelectedItem().addCompanyToCompanies(company);
-            
+
             Date date = Calendar.getInstance().getTime();
             SimpleDateFormat simpleDate = new SimpleDateFormat("MM.yyyy");
             company.setFirstListingDate(simpleDate.format(date));
             
-            int min = 1;
-            int max = 50; 
-            double random = ThreadLocalRandom.current().nextDouble(min, max);
-            random = (double) Math.round(random * 100) / 100;
-            int randomInt = ThreadLocalRandom.current().nextInt(min, max);
+            if (type.equalsIgnoreCase("new")) {
+                company.setStockExchangeBelonging(stockComboBox.getSelectionModel().getSelectedItem());
+                stockComboBox.getSelectionModel().getSelectedItem().getCompanies().add(company);
+            
+                int min = 1;
+                int max = 50; 
+                double random = ThreadLocalRandom.current().nextDouble(min, max);
+                random = (double) Math.round(random * 100) / 100;
+                int randomInt = ThreadLocalRandom.current().nextInt(min, max);
 
-            
-            company.setMin(random - 0.5);
-            company.setMax(random + 0.5);
-            company.setOpen(random);
-            company.setClose(random);
-            company.setCurrent(random);
-            company.setBid(random - 0.1);
-            company.setOffer(random + 0.1);
-            company.setVolume(randomInt);
-            company.setSharesCount(randomInt);
-            company.setTurnoverValue(company.getCurrent() * company.getVolume());
-            company.setMarketValue(company.getCurrent() * company.getVolume());            
-            company.setChange(1.0);
-            
+
+                company.setMin(random - 0.5);
+                company.setMax(random + 0.5);
+                company.setOpen(random);
+                company.setClose(random);
+                company.setCurrent(random);
+                company.setBid(random - 0.1);
+                company.setOffer(random + 0.1);
+                company.setVolume(randomInt);
+                company.setSharesCount(randomInt);
+                company.setTurnoverValue(company.getCurrent() * company.getVolume());
+                company.setMarketValue(company.getCurrent() * company.getVolume());            
+                company.setChange(1.0);
+            }
             
             
             okClicked = true;
