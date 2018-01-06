@@ -21,6 +21,10 @@ public class Transaction {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         this.time = sdf.format(cal.getTime());
     }
+    
+    public Transaction(){
+        
+    }
 
     public double getPrice() {
         return price;
@@ -40,5 +44,9 @@ public class Transaction {
     
     public String getTime() {
         return time;
-    }        
+    }
+    
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
