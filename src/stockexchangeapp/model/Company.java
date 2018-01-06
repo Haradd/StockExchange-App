@@ -5,18 +5,31 @@
  */
 package stockexchangeapp.model;
 
+import static java.lang.Thread.sleep;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
  *
  * @author blazej
  */
-public class Company {
+public class Company implements Runnable {
     
     private StringProperty name;
     private StringProperty abbreviation;
@@ -32,16 +45,19 @@ public class Company {
     private DoubleProperty turnoverValue;  // during current day, approx. volume * current
     private DoubleProperty marketValue; //shares_count * current
     private IntegerProperty sharesCount;
+    private IntegerProperty sharesForSale;
     private IntegerProperty volume; //during current 
     
     private DoubleProperty change;
     
     private StockExchange memberOfStockExchange;
-   
+       
+    private List<Transaction> transactionList;
+    private Set<Investor> investorSet;
     
     public Company(String name, String abbreviation, String chairman, String firstListingDate, Double min, Double max, Double open, Double close,
-                   Double current, Double bid, Double offer, Double turnoverValue, Double marketValue, Integer volume, Integer sharesCount, Double change,
-                   StockExchange memberOfStockExchange) {
+                   Double current, Double bid, Double offer, Double turnoverValue, Double marketValue, Integer volume, Integer sharesCount, Integer sharesForSale,
+                   Double change, StockExchange memberOfStockExchange) {
         
         this.name = new SimpleStringProperty(name);
         this.abbreviation = new SimpleStringProperty(abbreviation);
@@ -58,14 +74,90 @@ public class Company {
         this.marketValue = new SimpleDoubleProperty(marketValue);
         this.volume = new SimpleIntegerProperty(volume);
         this.sharesCount = new SimpleIntegerProperty(sharesCount);
+        this.sharesForSale = new SimpleIntegerProperty(sharesForSale);
         this.change = new SimpleDoubleProperty(change);
         this.memberOfStockExchange = memberOfStockExchange;
+        
+        this.transactionList = new LinkedList<>();
+        this.investorSet = new HashSet<>();
         
     }
     
     public Company() {
-        this(null, null, null, null, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0.0, null);
+        this(null, null, null, null, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0.0, null);
     }
+    
+    private volatile boolean running = true;
+    public void terminate() {
+        running = false;
+    }
+    
+    public void run(){
+        while(running){
+            try {
+                sellShares();
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Investor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        System.out.println(this.getName() + " thread terminated");
+    }
+    
+    public void sellShares() throws InterruptedException {
+        int min = 15;
+        int max = 20;
+        int randomInt = ThreadLocalRandom.current().nextInt(min * 1000, max * 1000);
+        
+        sleep(randomInt);
+        synchronized(this.getStockExchangeBelonging()){
+            int random = ThreadLocalRandom.current().nextInt(5000, 10000);
+            
+            this.setSharesCount(this.getSharesCount() + random);
+            this.setSharesForSale(this.getSharesForSale() + random);
+            this.setMarketValue(this.getSharesCount() * this.getCurrent());
+        }
+    }
+    
+    public void buyAllShares() {
+        this.getInvestorSet().forEach((investor) -> {
+            HashMap<Company, Integer> investorSharesOf = investor.getShares();
+
+            synchronized(this.getStockExchangeBelonging()) {
+                investor.setBudget( investor.getBudget() + investorSharesOf.get(this) * this.getCurrent());
+                investorSharesOf.remove(this);                  
+            }
+        });
+    }
+        
+    
+    public void calculateCurrentPrice() {
+        double random = ThreadLocalRandom.current().nextDouble(-15, 15);
+        random = (double) Math.round(random * 100) / 100;
+        
+        double newPrice = this.getCurrent() * (1 + random/100);
+        newPrice = (double) Math.round(newPrice * 100) / 100;
+        
+        this.setCurrent(newPrice);
+        this.setChange(random);
+        this.setMarketValue(this.getSharesCount() * this.getCurrent());
+    }
+    
+    @XmlElementWrapper(name = "transactions")
+    @XmlElement(name = "transaction")
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+    
+    public Set<Investor> getInvestorSet() {
+        return investorSet;
+    }
+    
+ 
 
     public final String getName() {
         return name.get();
@@ -233,6 +325,18 @@ public class Company {
 
     public IntegerProperty sharesCountProperty() {
         return sharesCount;
+    }
+    
+    public final int getSharesForSale() {
+        return sharesForSale.get();
+    }
+
+    public final void setSharesForSale(int value) {
+        sharesForSale.set(value);
+    }
+
+    public IntegerProperty sharesForSaleProperty() {
+        return sharesForSale;
     }
 
     public final int getVolume() {
