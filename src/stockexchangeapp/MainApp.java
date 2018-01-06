@@ -14,13 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import stockexchangeapp.model.Commodity;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.XmlDataWrapper;
 import stockexchangeapp.model.Currency;
@@ -44,56 +44,82 @@ public class MainApp extends Application {
     private ObservableList<StockExchange> stockExchangeData  = FXCollections.observableArrayList();
     private ObservableList<Company> companyData  = FXCollections.observableArrayList();
     private ObservableList<Investor> investorData  = FXCollections.observableArrayList();
+    private ObservableList<Commodity> commodityData = FXCollections.observableArrayList();
     
-    private Set<String> abbreviationsSet = new HashSet<String>();
-
+    private Set<String> companyAbbreviationSet = new HashSet<String>();
+    
     
     public MainApp(){
         this.currencyData.add(new Currency("Zloty", "PLN"));
         this.stockExchangeData.add(new StockExchange("Warsaw Stock Exchange", 0.05, "WSE", this.currencyData.get(0), "Poland", "Warsaw", "Książęca 4" ));
+        
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
-                30000.0, 60000.0, 10000, 20000, 5.1, stockExchangeData.get(0)));
-        abbreviationsSet.add("TPE");
+                30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("TPE");   
+        this.stockExchangeData.get(0).getCompanies().add(this.companyData.get(0));
         
-        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 10000.0, stockExchangeData.get(0)));
+        this.companyData.add(new Company("TAURON2 Polska Energia S.A.", "TPE2", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("TPE2");      
+        this.stockExchangeData.get(0).getCompanies().add(this.getCompanyData().get(1));
+
+                
+        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 1000.0, stockExchangeData.get(0)));
+        this.stockExchangeData.get(0).getInvestors().add(this.investorData.get(0));
         
+        this.investorData.add(new Investor("Błażej", "Piaskowski", "2", 1000.0, stockExchangeData.get(0)));             
+        this.stockExchangeData.get(0).getInvestors().add(this.investorData.get(1));
+
+        
+        
+        investorData.forEach(investor -> {
+            new Thread(investor).start();
+        });
+
+        companyData.forEach(company -> {
+            new Thread(company).start();
+        });       
+
     }
     
-    public ObservableList<Currency> getCurrencyData(){
+    public ObservableList<Currency> getCurrencyData() {
         return currencyData;
     }
     
-    public ObservableList<StockExchange> getStockExchangeData(){
+    public ObservableList<StockExchange> getStockExchangeData() {
         return stockExchangeData;
     }
     
-    public ObservableList<Company> getCompanyData(){
+    public ObservableList<Company> getCompanyData() {
         return companyData;
     }
     
-    public ObservableList<Investor> getInvestorData(){
+    public ObservableList<Investor> getInvestorData() {
         return investorData;
     }
     
-    public Set<String> getAbbreviationsSet(){
-        return abbreviationsSet;
+    public ObservableList<Commodity> getCommodityData() {
+        return commodityData;
     }
-
+    
+    public Set<String> getCompanyAbbreviationSet() {
+        return companyAbbreviationSet;
+    }
+    
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("StockExchangeApp");
+        this.primaryStage.setOnCloseRequest(e -> System.exit(0));
 
         initRootLayout();
 
         showControlPanel();
         showPricesPanel();
+        
     }
 
-    /**
-     * Initializes the root layout.
-     */
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
@@ -114,15 +140,12 @@ public class MainApp extends Application {
         }
     }
 
-    /**
-     * Shows the person overview inside the root layout.
-     */
     public void showControlPanel() {
         try {
             // Load control panel.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ControlPanel.fxml"));
-            AnchorPane controlPanel= (AnchorPane) loader.load();
+            BorderPane controlPanel= (BorderPane) loader.load();
             
             // Set control panel into the TabPane of root layout.       
             Tab tab = new Tab();
@@ -147,7 +170,7 @@ public class MainApp extends Application {
             // Load control panel.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/PricesPanel.fxml"));
-            AnchorPane pricesPanel= (AnchorPane) loader.load();
+            BorderPane pricesPanel= (BorderPane) loader.load();
             
             // Set prices panel into the TabPane of root layout.                   
             Tab tab = new Tab();
@@ -167,13 +190,6 @@ public class MainApp extends Application {
         }
     }
     
-        /**
-     * Returns the person file preference, i.e. the file that was last opened.
-     * The preference is read from the OS specific registry. If no such
-     * preference can be found, null is returned.
-     * 
-     * @return
-     */
     public File getFilePath() {
         Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("filePath", null);
@@ -204,30 +220,45 @@ public class MainApp extends Application {
    
     public void loadDataFromFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(XmlDataWrapper.class);
+            JAXBContext context = JAXBContext.newInstance(XmlDataWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
             // Reading XML from the file and unmarshalling.
             XmlDataWrapper wrapper = (XmlDataWrapper) um.unmarshal(file);
             
+            companyData.forEach(company -> {
+                company.terminate();
+            });
+            
+            investorData.forEach(investor -> {
+                investor.terminate();
+            });
+            
             currencyData.clear();
             currencyData.addAll(wrapper.getCurrencies());
-
-            companyData.clear();
-            companyData.addAll(wrapper.getCompanies());
-            companyData.forEach((company) -> {
-                abbreviationsSet.add(company.getAbbreviation());
-                //odpal wątek
-            });
             
             stockExchangeData.clear();
             stockExchangeData.addAll(wrapper.getStockExchanges());
             
+
+            
+            companyData.clear();
+            companyAbbreviationSet.clear();
+            companyData.addAll(wrapper.getCompanies());
+            companyData.forEach((company) -> {
+                companyAbbreviationSet.add(company.getAbbreviation());
+                company.setStockExchangeBelonging(this.getStockExchangeData().get(0));
+                this.getStockExchangeData().get(0).getCompanies().add(company);
+                
+                new Thread(company).start();
+            });
+
            investorData.clear();
            investorData.addAll(wrapper.getInvestors());
            investorData.forEach((investor) -> {
-               //odpal wątek
+               investor.setStockExchangeBelonging(this.getStockExchangeData().get(0));
+               this.getStockExchangeData().get(0).getInvestors().add(investor);
+               new Thread(investor).start();
            });
 
             // Save the file path to the registry.
@@ -245,16 +276,15 @@ public class MainApp extends Application {
 
     public void saveDataToFile(File file) {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(XmlDataWrapper.class);
+            JAXBContext context = JAXBContext.newInstance(XmlDataWrapper.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             // Wrapping data.
             XmlDataWrapper wrapper = new XmlDataWrapper();
             wrapper.setCurrencies(currencyData);
-            wrapper.setCompanies(companyData);
             wrapper.setStockExchanges(stockExchangeData);
+            wrapper.setCompanies(companyData);
             wrapper.setInvestors(investorData);
 
             // Marshalling and saving XML to the file.
@@ -263,6 +293,7 @@ public class MainApp extends Application {
             // Save the file path to the registry.
             setFilePath(file);
         } catch (Exception e) { // catches ANY exception
+            e.printStackTrace();
         	Alert alert = new Alert(Alert.AlertType.ERROR);
         	alert.setTitle("Error");
         	alert.setHeaderText("Could not save data");
