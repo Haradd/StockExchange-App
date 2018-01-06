@@ -18,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import stockexchangeapp.MainApp;
+import stockexchangeapp.model.Commodity;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.StockExchange;
 
@@ -26,20 +27,17 @@ import stockexchangeapp.model.StockExchange;
  *
  * @author blazej
  */
-public class CompanyFormDialogController implements Initializable {
+public class CommodityFormDialogController implements Initializable {
 
     @FXML
     private TextField nameField;
     @FXML
-    private TextField abbreviationField;
-    @FXML
-    private TextField chairmanField;
-    @FXML
-    private ComboBox<StockExchange> stockComboBox;
+    private TextField unitsField;
+
                  
     
     private Stage dialogStage;
-    private Company company;
+    private Commodity commodity;
     private boolean okClicked = false;
     private String type;
     
@@ -67,18 +65,11 @@ public class CompanyFormDialogController implements Initializable {
         this.type = type;
     }
     
-        public void setCompanyFields(Company company) {
-            this.company = company;
+    public void setCommodityFields(Commodity commodity) {
+        this.commodity = commodity;
             
-            nameField.setText(company.getName());
-            abbreviationField.setText(company.getAbbreviation());
-            if (type.equalsIgnoreCase("edit")) {
-                app.getCompanyAbbreviationSet().remove(company.getAbbreviation());
-            }
-            chairmanField.setText(company.getChairman());
-    
-            stockComboBox.setItems(app.getStockExchangeData());
-            stockComboBox.getSelectionModel().selectFirst();
+        nameField.setText(commodity.getName());
+        unitsField.setText(commodity.getUnits());           
      }
         
     public boolean isOkClicked() {
@@ -88,17 +79,10 @@ public class CompanyFormDialogController implements Initializable {
     @FXML
     private void handleOk() {
         if(isInputValid()){
-            company.setName(nameField.getText());
-            company.setAbbreviation(abbreviationField.getText());
-            company.setChairman(chairmanField.getText());
-
-            Date date = Calendar.getInstance().getTime();
-            SimpleDateFormat simpleDate = new SimpleDateFormat("MM.yyyy");
-            company.setFirstListingDate(simpleDate.format(date));
+            commodity.setName(nameField.getText());
+            commodity.setUnits(unitsField.getText());
             
             if (type.equalsIgnoreCase("new")) {
-                company.setStockExchangeBelonging(stockComboBox.getSelectionModel().getSelectedItem());
-                stockComboBox.getSelectionModel().getSelectedItem().getCompanies().add(company);
             
                 int min = 1;
                 int max = 50; 
@@ -106,14 +90,14 @@ public class CompanyFormDialogController implements Initializable {
                 random = (double) Math.round(random * 100) / 100;
                 int randomInt = ThreadLocalRandom.current().nextInt(min, max);
 
-                company.setMin(random - 0.5);
-                company.setMax(random + 0.5);
-                company.setCurrent(random);
-                company.setVolume(randomInt);
-                company.setSharesCount(randomInt);
-                company.setTurnoverValue(company.getCurrent() * company.getVolume());
-                company.setMarketValue(company.getCurrent() * company.getVolume());            
-                company.setChange(1.0);
+                commodity.setMin(random - 0.5);
+                commodity.setMax(random + 0.5);
+                commodity.setCurrent(random);
+                commodity.setVolume(randomInt);
+                commodity.setCommoditiesCount(randomInt);
+                commodity.setCommoditiesForSale(randomInt);
+                commodity.setTurnoverValue(commodity.getCurrent() * commodity.getVolume());
+                commodity.setChange(1.0);
             }
                         
             okClicked = true;
@@ -130,21 +114,13 @@ public class CompanyFormDialogController implements Initializable {
         String errorMessage = "";
 
         if (nameField.getText() == null || nameField.getText().length() == 0) {
-            errorMessage += "Company name can't be empty\n"; 
+            errorMessage += "Commodity name can't be empty\n"; 
         }
         
-        if (abbreviationField.getText() == null || abbreviationField.getText().length() == 0  ){
-            errorMessage += "Company abbreviation can't be empty\n";
+        if (unitsField.getText() == null || unitsField.getText().length() == 0  ){
+            errorMessage += "Commodity units can't be empty\n";
         }
-        
-        if (chairmanField.getText() == null || chairmanField.getText().length() == 0  ){
-            errorMessage += "Company chairman can't be empty\n";
-        }
-        
-        if (app.getCompanyAbbreviationSet().contains(abbreviationField.getText())){
-            errorMessage += "This abbreviation already exists!\n";
-        }
-        
+
         if (errorMessage.length() == 0) {
             return true;
         } else {
@@ -161,3 +137,4 @@ public class CompanyFormDialogController implements Initializable {
         }
     }    
 }
+
