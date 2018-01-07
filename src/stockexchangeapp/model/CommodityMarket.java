@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.model;
 
 import java.util.ArrayList;
@@ -18,8 +13,15 @@ public class CommodityMarket extends Market {
     
     public CommodityMarket(String name, Double fee){
         super(name, fee);
-        
         this.commodities = new ArrayList<>();
 
+    }
+    
+    public CommodityMarket(){
+        this(null, 0.0);
+    }
+    
+    public List<Commodity> getCommodities() {
+        return commodities;
     }
 }

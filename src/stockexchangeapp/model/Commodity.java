@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.model;
 
 import static java.lang.Thread.sleep;
@@ -30,6 +25,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 public class Commodity implements Runnable{
     
     private StringProperty name;
+    private StringProperty unit;
     private DoubleProperty min;
     private DoubleProperty max;
     private DoubleProperty current;
@@ -45,9 +41,10 @@ public class Commodity implements Runnable{
     private List<Transaction> transactionList;
     private Set<Investor> investorSet;
     
-    public Commodity(String name, Double fee, Double min, Double max, Double current, Double turnoverValue, Integer volume, Integer commoditiesCount, Integer commoditiesForSale,
+    public Commodity(String name, String unit, Double min, Double max, Double current, Double turnoverValue, Integer volume, Integer commoditiesCount, Integer commoditiesForSale,
                      Double change, CommodityMarket memberOfMarket){
         this.name = new SimpleStringProperty(name);
+        this.unit = new SimpleStringProperty(unit);
         this.min = new SimpleDoubleProperty(min);
         this.max = new SimpleDoubleProperty(max);
         this.current = new SimpleDoubleProperty(current);
@@ -63,7 +60,7 @@ public class Commodity implements Runnable{
     }
     
     public Commodity() {
-        
+        this(null, null, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0.0, null);
     }
     
     private volatile boolean running = true;
@@ -74,7 +71,7 @@ public class Commodity implements Runnable{
     public void run(){
         while(running){
             try {
-                sleep(1000);
+                sellCommodities();
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Investor.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,6 +125,10 @@ public class Commodity implements Runnable{
         this.setChange(random);
     }
     
+    public String toString() {
+        return this.getName();
+    }
+    
     @XmlElementWrapper(name = "transactions")
     @XmlElement(name = "transaction")
     public List<Transaction> getTransactionList() {
@@ -152,6 +153,18 @@ public class Commodity implements Runnable{
 
     public StringProperty nameProperty() {
         return name;
+    }
+    
+    public final String getUnit() {
+        return unit.get();
+    }
+
+    public final void setUnit(String value) {
+        unit.set(value);
+    }
+
+    public StringProperty unitProperty() {
+        return unit;
     }
 
     public final double getMin() {
