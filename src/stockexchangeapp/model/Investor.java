@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.model;
 
 import static java.lang.Thread.sleep;
@@ -31,8 +26,10 @@ public class Investor implements Runnable {
     private DoubleProperty budget;
     
     private StockExchange memberOfStockExchange;
+    private CommodityMarket memberOfCommodityMarket;
     
     private HashMap<Company, Integer> shares;
+    private HashMap<Commodity, Integer> commodities;
     
     
     public Investor(String firstName, String lastName, String id, Double budget, StockExchange memberOfStockExchange) {
@@ -41,6 +38,7 @@ public class Investor implements Runnable {
         this.id = new SimpleStringProperty(id);
         this.budget = new SimpleDoubleProperty(budget);
         this.shares = new HashMap<>();
+        this.commodities = new HashMap<>();
         this.memberOfStockExchange = memberOfStockExchange;
     }
     
@@ -55,18 +53,14 @@ public class Investor implements Runnable {
     
     public void run(){
         while(running){
-            int i =0;
             try {
                 buyShare();
-                //sellAllShares();
-                i++;
                 raiseBudget();
+                sellShares();
                 
-                if ( i == 3){
-                    sellAllShares();
-                }
-                
-                
+                buyCommodity();
+                raiseBudget();
+                sellCommodities();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Investor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -193,6 +187,116 @@ public class Investor implements Runnable {
         }       
     }
     
+    public void buyCommodity() throws InterruptedException{
+        int min = 2;
+        int max = 7;
+        int randomInt = ThreadLocalRandom.current().nextInt(min * 1000, max * 1000);
+        
+        sleep(randomInt);  
+        synchronized(this.getCommodityMarketBelonging()){
+            List<Commodity> commodities = this.memberOfCommodityMarket.getCommodities();
+            int randomIndex = ThreadLocalRandom.current().nextInt(0, commodities.size());
+            Commodity commodity = commodities.get(randomIndex);
+            
+            System.out.println(commodity);
+
+            if (commodity.getCommoditiesForSale() > 0 && this.getBudget() > 0) {
+
+                int commoditiesToBuy = (int) ((int) this.getBudget() / commodity.getCurrent());
+
+                if (commodity.getCommoditiesForSale() - commoditiesToBuy >= 0) {
+                    double value = commoditiesToBuy * commodity.getCurrent() ;
+                    this.getCommodities().put(commodity, commoditiesToBuy);                    
+                    this.setBudget(this.getBudget() - value);
+                    
+                    commodity.getTransactionList().add(new Transaction(commodity.getCurrent(), commoditiesToBuy));
+                    commodity.calculateCurrentPrice();
+                    commodity.setCommoditiesForSale(commodity.getCommoditiesForSale() - commoditiesToBuy);
+                    commodity.setVolume(commodity.getVolume() + commoditiesToBuy);
+                    commodity.setTurnoverValue(commodity.getTurnoverValue() + value);
+
+                    System.out.println(String.valueOf("investor:" + this.getId() + " buys " + commodity.getName() + " in number of " +  commoditiesToBuy + " for: " + value));
+                } else{
+                    // buy all available commodities
+                    int availableCommodities = commodity.getCommoditiesForSale();
+                    double value = availableCommodities * commodity.getCurrent();
+                    this.getCommodities().put(commodity, availableCommodities);                                       
+                    this.setBudget( this.getBudget() - value);
+
+                    commodity.getTransactionList().add(new Transaction(commodity.getCurrent(), availableCommodities));
+                    commodity.calculateCurrentPrice();
+                    commodity.setCommoditiesForSale(0);   
+                    commodity.setVolume(commodity.getVolume() + availableCommodities);
+                    commodity.setTurnoverValue(commodity.getTurnoverValue() + value);
+                    
+                    System.out.println(String.valueOf("investor:" + this.getId() + " buys " + commodity.getName() + " in number of " + availableCommodities + " for: " + value ));
+                }
+                
+                commodity.getInvestorSet().add(this);
+                
+            }  else System.out.println("investor: " + this.getId() + "can't buy commodities");    
+        }
+    }
+    
+        public void sellCommodities() throws InterruptedException {
+        int min = 5;
+        int max = 7;
+        int randomInt = ThreadLocalRandom.current().nextInt(min * 1000, max * 1000);
+        
+        sleep(randomInt);  
+        synchronized(this.getCommodityMarketBelonging()){
+            if (!this.getCommodities().isEmpty()){
+                Map.Entry<Commodity, Integer> entry = this.getCommodities().entrySet().iterator().next();
+                Commodity commodity = entry.getKey();
+
+                int investorCommodities = this.commodities.get(commodity);
+                double value = investorCommodities * commodity.getCurrent();
+                double income = value * (1 - this.getCommodityMarketBelonging().getFee()/100);
+
+                commodity.getTransactionList().add(new Transaction(commodity.getCurrent(), investorCommodities));
+                commodity.getInvestorSet().remove(this);
+                commodity.calculateCurrentPrice();
+                commodity.setCommoditiesForSale(commodity.getCommoditiesForSale() + investorCommodities);
+                commodity.setVolume(commodity.getVolume() + investorCommodities);
+                commodity.setTurnoverValue(commodity.getTurnoverValue() + value);           
+
+                this.setBudget(this.getBudget() + income);
+                this.getCommodities().remove(commodity);
+                
+            }
+        }
+    }
+        
+    public void sellAllCommodities() {
+        synchronized(this.getCommodityMarketBelonging()){
+            if (!this.getCommodities().isEmpty()){
+                
+                
+                Iterator it = this.getCommodities().entrySet().iterator();
+                while (it.hasNext()) {
+                    HashMap.Entry pair = (HashMap.Entry)it.next();
+                    
+                    Commodity commodity = (Commodity) pair.getKey();
+                    int investorCommodities = (int) pair.getValue();
+                    
+                    double value = investorCommodities * commodity.getCurrent();
+                    double income = value * (1 - this.getCommodityMarketBelonging().getFee()/100);
+
+                    commodity.getTransactionList().add(new Transaction(commodity.getCurrent(), investorCommodities));
+                    commodity.getInvestorSet().remove(this);
+                    commodity.calculateCurrentPrice();
+                    commodity.setCommoditiesForSale(commodity.getCommoditiesForSale() + investorCommodities);
+                    commodity.setVolume(commodity.getVolume() + investorCommodities);
+                    commodity.setTurnoverValue(commodity.getTurnoverValue() + value);     
+                    
+                    this.setBudget(this.getBudget() + income);
+                    this.getCommodities().remove(commodity);
+                }             
+            }
+        }       
+    }
+    
+    
     @XmlElementWrapper(name = "shares")
     @XmlElement(name = "share")
     public HashMap<Company, Integer> getShares() {
@@ -201,6 +305,16 @@ public class Investor implements Runnable {
     
     public void setShares(HashMap<Company, Integer> shares) {
         this.shares = shares;
+    }
+    
+    @XmlElementWrapper(name = "commodities")
+    @XmlElement(name = "commodity")
+    public HashMap<Commodity, Integer> getCommodities() {
+        return commodities;
+    }
+    
+    public void setCommodities(HashMap<Commodity, Integer> commodities) {
+        this.commodities = commodities;
     }
 
     public final String getFirstName() {
@@ -259,5 +373,12 @@ public class Investor implements Runnable {
         memberOfStockExchange = stockExchange;
     }
     
+    public final CommodityMarket getCommodityMarketBelonging () {
+        return memberOfCommodityMarket;
+    }
+    
+    public final void setCommodityMarketBelonging(CommodityMarket commodityMarket) {
+        memberOfCommodityMarket = commodityMarket;
+    }  
     
 }

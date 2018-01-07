@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.model;
 
 import static java.lang.Thread.sleep;
@@ -138,9 +133,19 @@ public class Company implements Runnable {
         double newPrice = this.getCurrent() * (1 + random/100);
         newPrice = (double) Math.round(newPrice * 100) / 100;
         
+        if (newPrice > this.getMax()) {
+            this.setMax(newPrice);
+        } else if (newPrice < this.getMin()) {
+            this.setMin(newPrice);
+        }
+        
         this.setCurrent(newPrice);
         this.setChange(random);
         this.setMarketValue(this.getSharesCount() * this.getCurrent());
+    }
+    
+    public String toString() {
+        return this.getName();
     }
     
     @XmlElementWrapper(name = "transactions")
