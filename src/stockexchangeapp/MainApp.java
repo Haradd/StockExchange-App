@@ -29,6 +29,7 @@ import stockexchangeapp.model.Investor;
 import stockexchangeapp.model.StockExchange;
 import stockexchangeapp.view.CommoditiesPanelController;
 import stockexchangeapp.view.ControlPanelController;
+import stockexchangeapp.view.NewsPanelController;
 import stockexchangeapp.view.StocksPanelController;
 import stockexchangeapp.view.RootLayoutController;
 import stockexchangeapp.view.StatisticsPanelController;
@@ -170,6 +171,7 @@ public class MainApp extends Application {
         showStocksPanel();
         showCommoditiesPanel();   
         showStatisticPanel();
+        showNewsPanel();
     }
 
     public void initRootLayout() {
@@ -285,6 +287,31 @@ public class MainApp extends Application {
             
             // Give the controller access to the main app.
             StatisticsPanelController controller = loader.getController();
+            controller.setApp(this);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showNewsPanel() {
+        try {
+            // Load control panel.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/NewsPanel.fxml"));
+            BorderPane newsPanel= (BorderPane) loader.load();
+            
+            // Set prices panel into the TabPane of root layout.                   
+            Tab tab = new Tab();
+            tab.setText("News");
+            tab.setContent(newsPanel);
+      
+            VBox vbox = (VBox) rootLayout.getCenter();
+            TabPane tabPane = (TabPane) vbox.getChildren().get(1);
+            tabPane.getTabs().add(tab);            
+            
+            // Give the controller access to the main app.
+            NewsPanelController controller = loader.getController();
             controller.setApp(this);
             
         } catch (IOException e) {
