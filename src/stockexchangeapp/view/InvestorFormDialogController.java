@@ -88,6 +88,7 @@ public class InvestorFormDialogController implements Initializable {
             investor.setBudget(Double.parseDouble(budgetField.getText()));
             investor.setId(idField.getText());
             investor.setStockExchangeBelonging(stockComboBox.getSelectionModel().getSelectedItem());
+            stockComboBox.getSelectionModel().getSelectedItem().getInvestors().add(investor);            
              
             okClicked = true;
             dialogStage.close();  

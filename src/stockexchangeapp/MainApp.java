@@ -64,23 +64,41 @@ public class MainApp extends Application {
         this.commodityMarket = new CommodityMarket("Commodity Market", 0.02);
         
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
-                30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
+                30000.0, 60000.0, 10000, 20000, 15000, 5.1, stockExchangeData.get(0)));
         companyAbbreviationSet.add("TPE");   
         
-        this.companyData.add(new Company("TAURON2 Polska Energia S.A.", "TPE2", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
-                30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
-        companyAbbreviationSet.add("TPE2");      
+        this.companyData.add(new Company("CD Projekt S.A.", "CDR", "Adam Kiciński", "01.2002", 23.0, 23.5, 23.1, 3.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 20000, 20000, 9.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("CDR");  
         
-        this.commodityData.add(new Commodity("Gold", "Ounces", 100.0, 110.0, 105.0, 10000.0, 1000, 1000, 1000, 5.0, commodityMarket));
+        this.companyData.add(new Company("PKN Orlen S.A.", "PKN", "Wojciech Jasiński", "01.1999", 6.0, 8.5, 73.1, 7.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 20000, 20000, 9.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("PKN");  
+        
+        this.companyData.add(new Company("Powszechny Zakład Ubezpieczeń PZU S.A.", "PZU", "Piotr Surówka", "05.2010", 0.5, 1.5, 7.1, 7.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 30000, 30000, 9.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("PKN");
+        
+        this.companyData.add(new Company("ASSECO Poland", "ASC", "Adam Góral", "05.1998", 8.0, 17.5, 13.1, 7.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 50000, 50000, 9.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("ASC");
+        
+        this.companyData.add(new Company("Comarch S.A.", "CMR", "Janusz Filipiak", "05.1999", 73.0, 200.5, 223.1, 7.4, 3.3, 3.1, 3.5,
+                30000.0, 60000.0, 10000, 230000, 230000, 9.1, stockExchangeData.get(0)));
+        companyAbbreviationSet.add("CMR");
+        
+        
+        
+        this.commodityData.add(new Commodity("Gold", "Ounces", 100.0, 210.0, 255.0, 10000.0, 1000, 1000, 1000, 5.0, commodityMarket));
         this.commodityData.add(new Commodity("Silver", "Ounces", 100.0, 110.0, 105.0, 10000.0, 3000, 3000, 3000, 2.0, commodityMarket));
-        this.commodityData.add(new Commodity("Crude Oil", "Barrels", 100.0, 110.0, 105.0, 10000.0, 1000, 24000, 24000, -1.0, commodityMarket));
-        this.commodityData.add(new Commodity("Cocoa", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 5000, 5000, 7.0, commodityMarket));
-        this.commodityData.add(new Commodity("Coffee", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 88000, 88000, 14.1, commodityMarket));
-        this.commodityData.add(new Commodity("Corn", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 30001, 30001, 14.1, commodityMarket));
-        this.commodityData.add(new Commodity("Wheat", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
-        this.commodityData.add(new Commodity("Natural gas", "Barrels", 100.0, 110.0, 105.0, 10000.0, 1000, 3000, 3000, 14.1, commodityMarket));
-        this.commodityData.add(new Commodity("Lumber", "Cubic meters", 100.0, 110.0, 105.0, 10000.0, 1000, 4000, 3000, 14.1, commodityMarket));
-        this.commodityData.add(new Commodity("Orange juice", "Pounds", 100.0, 110.0, 105.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Crude Oil", "Barrels", 100.0, 160.0, 165.0, 10000.0, 1000, 24000, 24000, -1.0, commodityMarket));
+        this.commodityData.add(new Commodity("Cocoa", "Tons", 1.0, 10.0, 5.0, 10000.0, 1000, 5000, 5000, 7.0, commodityMarket));
+        this.commodityData.add(new Commodity("Coffee", "Tons", 60.0, 110.0, 115.0, 10000.0, 1000, 88000, 88000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Corn", "Tons", 10.0, 20.0, 35.0, 10000.0, 1000, 30001, 30001, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Wheat", "Tons", 1.0, 11.0, 19.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Natural gas", "Barrels", 1.0, 3.0, 5.0, 10000.0, 1000, 3000, 3000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Lumber", "Cubic meters", 10.0, 88.0, 105.0, 10000.0, 1000, 4000, 3000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Orange juice", "Pounds", 10.0, 18.0, 15.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
 
                        
         this.investorData.add(new Investor("Scrooge", "McDuck", "1", 12000.0, stockExchangeData.get(0)));          

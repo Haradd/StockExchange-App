@@ -6,9 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stockexchangeapp.view.RootLayoutController">
-   <top>
-      <VBox prefHeight="396.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stockexchangeapp.view.RootLayoutController">
+   <center>
+      <VBox prefWidth="800.0">
          <children>
             <MenuBar>
               <menus>
@@ -30,22 +30,17 @@
                            </accelerator>
                         </MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As..." />
-                        <MenuItem mnemonicParsing="false" text="Exit" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                      </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <TabPane prefHeight="379.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" />
+            <TabPane prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" />
          </children></VBox>
-   </top>
+   </center>
 </BorderPane>

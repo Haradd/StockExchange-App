@@ -3,16 +3,34 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommodityDetailsDialog.fxml</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Company.java</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/MainApp.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/InvestorFormDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommodityDetailsDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StockDetailsDialog.fxml</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/StockExchange.java</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Market.java</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/ControlPanel.fxml</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Investor.java</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StockExchangeFormDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Transaction.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StockDetailsDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StatisticsPanel.fxml</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/ControlPanelController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/CommodityMarket.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommoditiesPanel.fxml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommodityFormDialogController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Commodity.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/XmlDataWrapper.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CompanyFormDialog.fxml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StatisticsPanelController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Market.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/RootLayout.fxml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StocksPanelController.java</file>
             <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CompanyFormDialogController.java</file>
-            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Currency.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/StocksPanel.fxml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommoditiesPanelController.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/save.xml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/model/Investor.java</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/CommodityFormDialog.fxml</file>
+            <file>file:/home/blazej/NetBeansProjects/StockExchangeApp/src/stockexchangeapp/view/RootLayoutController.java</file>
         </group>
     </open-files>
 </project-private>

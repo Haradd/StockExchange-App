@@ -69,7 +69,7 @@ public class CommodityFormDialogController implements Initializable {
         this.commodity = commodity;
             
         nameField.setText(commodity.getName());
-        unitsField.setText(commodity.getUnits());           
+        unitsField.setText(commodity.getUnit());           
      }
         
     public boolean isOkClicked() {
@@ -80,7 +80,9 @@ public class CommodityFormDialogController implements Initializable {
     private void handleOk() {
         if(isInputValid()){
             commodity.setName(nameField.getText());
-            commodity.setUnits(unitsField.getText());
+            commodity.setUnit(unitsField.getText());
+            commodity.setCommodityMarketBelonging(app.getCommodityMarket());
+            app.getCommodityMarket().getCommodities().add(commodity);
             
             if (type.equalsIgnoreCase("new")) {
             
