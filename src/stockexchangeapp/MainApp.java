@@ -21,14 +21,17 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import stockexchangeapp.model.Commodity;
+import stockexchangeapp.model.CommodityMarket;
 import stockexchangeapp.model.Company;
 import stockexchangeapp.model.XmlDataWrapper;
 import stockexchangeapp.model.Currency;
 import stockexchangeapp.model.Investor;
 import stockexchangeapp.model.StockExchange;
+import stockexchangeapp.view.CommoditiesPanelController;
 import stockexchangeapp.view.ControlPanelController;
-import stockexchangeapp.view.PricesPanelController;
+import stockexchangeapp.view.StocksPanelController;
 import stockexchangeapp.view.RootLayoutController;
+import stockexchangeapp.view.StatisticsPanelController;
 
 /**
  *
@@ -45,40 +48,66 @@ public class MainApp extends Application {
     private ObservableList<Company> companyData  = FXCollections.observableArrayList();
     private ObservableList<Investor> investorData  = FXCollections.observableArrayList();
     private ObservableList<Commodity> commodityData = FXCollections.observableArrayList();
+    private CommodityMarket commodityMarket;
     
     private Set<String> companyAbbreviationSet = new HashSet<String>();
     
     
     public MainApp(){
         this.currencyData.add(new Currency("Zloty", "PLN"));
+        this.currencyData.add(new Currency("Dollar", "USD"));
+        this.currencyData.add(new Currency("Euro", "EUR"));
+        this.currencyData.add(new Currency("Pound sterling", "GBP"));
+        
         this.stockExchangeData.add(new StockExchange("Warsaw Stock Exchange", 0.05, "WSE", this.currencyData.get(0), "Poland", "Warsaw", "Książęca 4" ));
+        
+        this.commodityMarket = new CommodityMarket("Commodity Market", 0.02);
         
         this.companyData.add(new Company("TAURON Polska Energia S.A.", "TPE", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
                 30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
         companyAbbreviationSet.add("TPE");   
-        this.stockExchangeData.get(0).getCompanies().add(this.companyData.get(0));
         
         this.companyData.add(new Company("TAURON2 Polska Energia S.A.", "TPE2", "Filip Grzegorczyk", "06.2010", 3.0, 3.5, 3.1, 3.4, 3.3, 3.1, 3.5,
                 30000.0, 60000.0, 10000, 20000, 1000, 5.1, stockExchangeData.get(0)));
         companyAbbreviationSet.add("TPE2");      
-        this.stockExchangeData.get(0).getCompanies().add(this.getCompanyData().get(1));
-
-                
-        this.investorData.add(new Investor("Błażej", "Piaskowski", "1", 1000.0, stockExchangeData.get(0)));
-        this.stockExchangeData.get(0).getInvestors().add(this.investorData.get(0));
         
-        this.investorData.add(new Investor("Błażej", "Piaskowski", "2", 1000.0, stockExchangeData.get(0)));             
-        this.stockExchangeData.get(0).getInvestors().add(this.investorData.get(1));
+        this.commodityData.add(new Commodity("Gold", "Ounces", 100.0, 110.0, 105.0, 10000.0, 1000, 1000, 1000, 5.0, commodityMarket));
+        this.commodityData.add(new Commodity("Silver", "Ounces", 100.0, 110.0, 105.0, 10000.0, 3000, 3000, 3000, 2.0, commodityMarket));
+        this.commodityData.add(new Commodity("Crude Oil", "Barrels", 100.0, 110.0, 105.0, 10000.0, 1000, 24000, 24000, -1.0, commodityMarket));
+        this.commodityData.add(new Commodity("Cocoa", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 5000, 5000, 7.0, commodityMarket));
+        this.commodityData.add(new Commodity("Coffee", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 88000, 88000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Corn", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 30001, 30001, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Wheat", "Tons", 100.0, 110.0, 105.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Natural gas", "Barrels", 100.0, 110.0, 105.0, 10000.0, 1000, 3000, 3000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Lumber", "Cubic meters", 100.0, 110.0, 105.0, 10000.0, 1000, 4000, 3000, 14.1, commodityMarket));
+        this.commodityData.add(new Commodity("Orange juice", "Pounds", 100.0, 110.0, 105.0, 10000.0, 1000, 52000, 52000, 14.1, commodityMarket));
+
+                       
+        this.investorData.add(new Investor("Scrooge", "McDuck", "1", 12000.0, stockExchangeData.get(0)));          
+        this.investorData.add(new Investor("Błażej", "Piaskowski", "2", 5000.0, stockExchangeData.get(0)));    
+        this.investorData.add(new Investor("Jordan", "Belfort", "3", 60000.0, stockExchangeData.get(0)));
+        this.investorData.add(new Investor("Snow", "White", "4", 1000.0, stockExchangeData.get(0)));  
+        this.investorData.add(new Investor("Peter", "Pan", "5", 5000.0, stockExchangeData.get(0)));  
+        this.investorData.add(new Investor("Donald", "Duck", "6", 6000.0, stockExchangeData.get(0)));
+        this.investorData.add(new Investor("Tony", "Stark", "7", 12000.0, stockExchangeData.get(0)));
+        this.investorData.add(new Investor("Jack", "Sparrow", "8", 100.0, stockExchangeData.get(0)));        
 
         
         
         investorData.forEach(investor -> {
+            investor.setCommodityMarketBelonging(commodityMarket);
             new Thread(investor).start();
         });
 
         companyData.forEach(company -> {
+            stockExchangeData.get(0).getCompanies().add(company);
             new Thread(company).start();
-        });       
+        });
+        
+        commodityData.forEach(commodity -> {
+            commodityMarket.getCommodities().add(commodity);
+            new Thread(commodity).start();
+        });
 
     }
     
@@ -102,6 +131,10 @@ public class MainApp extends Application {
         return commodityData;
     }
     
+    public CommodityMarket getCommodityMarket() {
+        return commodityMarket;
+    }
+    
     public Set<String> getCompanyAbbreviationSet() {
         return companyAbbreviationSet;
     }
@@ -116,8 +149,9 @@ public class MainApp extends Application {
         initRootLayout();
 
         showControlPanel();
-        showPricesPanel();
-        
+        showStocksPanel();
+        showCommoditiesPanel();   
+        showStatisticPanel();
     }
 
     public void initRootLayout() {
@@ -152,7 +186,7 @@ public class MainApp extends Application {
             tab.setText("Control Panel");
             tab.setContent(controlPanel);
             
-            VBox vbox = (VBox) rootLayout.getTop();
+            VBox vbox = (VBox) rootLayout.getCenter();
             TabPane tabPane = (TabPane) vbox.getChildren().get(1);
             tabPane.getTabs().add(tab);
             
@@ -165,24 +199,74 @@ public class MainApp extends Application {
         }
     }
     
-    public void showPricesPanel() {
+    public void showStocksPanel() {
         try {
             // Load control panel.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PricesPanel.fxml"));
-            BorderPane pricesPanel= (BorderPane) loader.load();
+            loader.setLocation(MainApp.class.getResource("view/StocksPanel.fxml"));
+            BorderPane stocksPanel= (BorderPane) loader.load();
             
             // Set prices panel into the TabPane of root layout.                   
             Tab tab = new Tab();
-            tab.setText("Prices & Markets");
-            tab.setContent(pricesPanel);
+            tab.setText("Stocks");
+            tab.setContent(stocksPanel);
       
-            VBox vbox = (VBox) rootLayout.getTop();
+            VBox vbox = (VBox) rootLayout.getCenter();
             TabPane tabPane = (TabPane) vbox.getChildren().get(1);
             tabPane.getTabs().add(tab);            
             
             // Give the controller access to the main app.
-            PricesPanelController controller = loader.getController();
+            StocksPanelController controller = loader.getController();
+            controller.setApp(this);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showCommoditiesPanel() {
+        try {
+            // Load control panel.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CommoditiesPanel.fxml"));
+            BorderPane commoditiesPanel= (BorderPane) loader.load();
+            
+            // Set prices panel into the TabPane of root layout.                   
+            Tab tab = new Tab();
+            tab.setText("Commodities");
+            tab.setContent(commoditiesPanel);
+      
+            VBox vbox = (VBox) rootLayout.getCenter();
+            TabPane tabPane = (TabPane) vbox.getChildren().get(1);
+            tabPane.getTabs().add(tab);            
+            
+            // Give the controller access to the main app.
+            CommoditiesPanelController controller = loader.getController();
+            controller.setApp(this);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showStatisticPanel() {
+        try {
+            // Load control panel.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/StatisticsPanel.fxml"));
+            BorderPane statisitcsPanel= (BorderPane) loader.load();
+            
+            // Set prices panel into the TabPane of root layout.                   
+            Tab tab = new Tab();
+            tab.setText("Statistics");
+            tab.setContent(statisitcsPanel);
+      
+            VBox vbox = (VBox) rootLayout.getCenter();
+            TabPane tabPane = (TabPane) vbox.getChildren().get(1);
+            tabPane.getTabs().add(tab);            
+            
+            // Give the controller access to the main app.
+            StatisticsPanelController controller = loader.getController();
             controller.setApp(this);
             
         } catch (IOException e) {
@@ -223,39 +307,48 @@ public class MainApp extends Application {
             JAXBContext context = JAXBContext.newInstance(XmlDataWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
 
-            // Reading XML from the file and unmarshalling.
-            XmlDataWrapper wrapper = (XmlDataWrapper) um.unmarshal(file);
-            
+            commodityData.forEach(commodity -> {
+                commodity.terminate();
+            });           
             companyData.forEach(company -> {
                 company.terminate();
-            });
-            
+            });            
             investorData.forEach(investor -> {
                 investor.terminate();
             });
+            
+            // Reading XML from the file and unmarshalling.
+            XmlDataWrapper wrapper = (XmlDataWrapper) um.unmarshal(file);
             
             currencyData.clear();
             currencyData.addAll(wrapper.getCurrencies());
             
             stockExchangeData.clear();
-            stockExchangeData.addAll(wrapper.getStockExchanges());
-            
-
-            
+            stockExchangeData.addAll(wrapper.getStockExchanges());        
+         
             companyData.clear();
             companyAbbreviationSet.clear();
             companyData.addAll(wrapper.getCompanies());
-            companyData.forEach((company) -> {
+            companyData.forEach(company -> {
                 companyAbbreviationSet.add(company.getAbbreviation());
                 company.setStockExchangeBelonging(this.getStockExchangeData().get(0));
                 this.getStockExchangeData().get(0).getCompanies().add(company);
                 
                 new Thread(company).start();
             });
+            
+            commodityData.clear();
+            commodityData.addAll(wrapper.getCommodities());
+            commodityData.forEach(commodity -> {
+               commodity.setCommodityMarketBelonging(commodityMarket);
+               commodityMarket.getCommodities().add(commodity);
+               
+               new Thread(commodity).start();
+            });
 
            investorData.clear();
            investorData.addAll(wrapper.getInvestors());
-           investorData.forEach((investor) -> {
+           investorData.forEach(investor -> {
                investor.setStockExchangeBelonging(this.getStockExchangeData().get(0));
                this.getStockExchangeData().get(0).getInvestors().add(investor);
                new Thread(investor).start();
@@ -285,6 +378,7 @@ public class MainApp extends Application {
             wrapper.setCurrencies(currencyData);
             wrapper.setStockExchanges(stockExchangeData);
             wrapper.setCompanies(companyData);
+            wrapper.setCommodities(commodityData);
             wrapper.setInvestors(investorData);
 
             // Marshalling and saving XML to the file.
