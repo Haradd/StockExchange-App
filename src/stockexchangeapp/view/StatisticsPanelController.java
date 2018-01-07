@@ -20,7 +20,7 @@ import stockexchangeapp.model.Company;
  * @author blazej
  */
 public class StatisticsPanelController implements Initializable {
- private MainApp app;
+    private MainApp app;
     
     @FXML
     private ListView<Company> companyList;
