@@ -20,6 +20,7 @@ public class XmlDataWrapper {
     private List<Currency> currencies;
     private List<StockExchange> stockExchanges;
     private List<Company> companies;
+    private List<Commodity> commodities;
     private List<Investor> investors;
 
     @XmlElement(name = "currency")
@@ -48,6 +49,16 @@ public class XmlDataWrapper {
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
     }
+    
+    @XmlElement(name = "commodity")
+    public List<Commodity> getCommodities() {
+        return commodities;
+    }
+
+    public void setCommodities(List<Commodity> commodities) {
+        this.commodities = commodities;
+    }
+    
     
     @XmlElement(name = "investor")
     public List<Investor> getInvestors() {
