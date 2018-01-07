@@ -36,7 +36,7 @@
           <CategoryAxis side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
+          <NumberAxis fx:id="yAxis" label="Price" side="LEFT" />
         </yAxis>
       </LineChart>
       <GridPane layoutX="32.0" layoutY="395.0" prefHeight="180.0" prefWidth="744.0">
@@ -160,7 +160,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="memberOfStockExchange1" layoutX="517.0" layoutY="106.0" text="Warsaw Stock Exchange" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <Label fx:id="memberOfStockExchange" layoutX="517.0" layoutY="106.0" text="Warsaw Stock Exchange" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <font>
                   <Font size="15.0" />
                </font>

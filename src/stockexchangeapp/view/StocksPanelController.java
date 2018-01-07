@@ -77,6 +77,7 @@ public class StocksPanelController implements Initializable {
                     // Set the currency into the controller.
                     StockDetailsDialogController controller = loader.getController();
                     controller.setDialogStage(dialogStage);
+                    System.out.println(companyTable.getSelectionModel().getSelectedItem().getStockExchangeBelonging());
                     controller.setCompanyFields(companyTable.getSelectionModel().getSelectedItem());
 
                     // Show the dialog and wait until the user closes it
