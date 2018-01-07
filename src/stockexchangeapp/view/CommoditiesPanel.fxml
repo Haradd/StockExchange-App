@@ -19,8 +19,9 @@
          <children>
                   <TableView fx:id="commodityTable" prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="1">
                      <columns>
-                        <TableColumn fx:id="nameColumn" prefWidth="362.0" text="Fullname" />
-                        <TableColumn fx:id="numberOfUnitsColumn" prefWidth="206.0" text="Number of units" />
+                        <TableColumn fx:id="nameColumn" prefWidth="291.0" text="Fullname" />
+                  <TableColumn fx:id="unitColumn" minWidth="0.0" prefWidth="121.0" text="Unit" />
+                        <TableColumn fx:id="numberOfUnitsColumn" prefWidth="156.0" text="Number of units" />
                         <TableColumn fx:id="currentPriceColumn" prefWidth="141.0" text="Price" />
                         <TableColumn fx:id="changeColumn" prefWidth="90.0" text="Change" />
                      </columns>

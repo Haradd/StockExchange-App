@@ -6,25 +6,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stockexchangeapp.view.PricesPanelController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stockexchangeapp.view.StocksPanelController">
    <top>
-            <TableView fx:id="companyTable" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <columns>
-                  <TableColumn fx:id="nameColumn" prefWidth="368.0" text="Fullname" />
-                  <TableColumn fx:id="abbreviationColumn" minWidth="0.0" prefWidth="58.0" text="Abbr." />
-                  <TableColumn fx:id="currentPriceColumn" prefWidth="101.0" text="Price" />
-                  <TableColumn fx:id="changColumn" prefWidth="72.0" text="Change" />
-               </columns>
-            </TableView>
-   </top>
-   <bottom>
-            <GridPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <GridPane prefHeight="600.0" prefWidth="802.0" BorderPane.alignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="400.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="560.0" minHeight="10.0" prefHeight="551.0" vgrow="SOMETIMES" />
                </rowConstraints>
+         <children>
+                  <TableView fx:id="companyTable" prefHeight="400.0" prefWidth="600.0" GridPane.rowIndex="1">
+                     <columns>
+                        <TableColumn fx:id="nameColumn" prefWidth="364.0" text="Fullname" />
+                        <TableColumn fx:id="abbreviationColumn" minWidth="0.0" prefWidth="74.0" text="Abbr." />
+                  <TableColumn fx:id="numberOfSharesColumn" prefWidth="176.0" text="Number of shares" />
+                        <TableColumn fx:id="currentPriceColumn" prefWidth="110.0" text="Price" />
+                        <TableColumn fx:id="changeColumn" prefWidth="75.0" text="Change" />
+                     </columns>
+                  </TableView>
+         </children>
             </GridPane>
-   </bottom>
-      </BorderPane>
+   </top>
+</BorderPane>

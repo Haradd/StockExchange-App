@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.view;
 
 import java.io.IOException;
@@ -36,6 +31,8 @@ public class CommoditiesPanelController implements Initializable {
     @FXML
     private TableColumn<Commodity, String> nameColumn;
     @FXML
+    private TableColumn<Commodity, String> unitColumn;
+    @FXML
     private TableColumn<Commodity, Integer> numberOfUnitsColumn;
     @FXML
     private TableColumn<Commodity, Double> currentPriceColumn;
@@ -51,6 +48,7 @@ public class CommoditiesPanelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        unitColumn.setCellValueFactory(cellData -> cellData.getValue().unitProperty());
         numberOfUnitsColumn.setCellValueFactory(cellData -> cellData.getValue().commoditiesCountProperty().asObject());
         currentPriceColumn.setCellValueFactory(cellData -> cellData.getValue().currentProperty().asObject());
         changeColumn.setCellValueFactory(cellData -> cellData.getValue().changeProperty().asObject());    
