@@ -49,6 +49,12 @@ public class StatisticsPanelController implements Initializable {
     
     @FXML 
     public void handleCompareAssets() {
+        
+        //clear old values
+        if ( !lineChart.getData().isEmpty()) {
+            lineChart.getData().remove(0, lineChart.getData().size());
+        }
+        
         companyList.getSelectionModel().getSelectedItems().forEach(company -> {
             XYChart.Series series = new XYChart.Series();
 
