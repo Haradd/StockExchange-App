@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.view;
 
 import java.net.URL;
@@ -22,7 +17,7 @@ import stockexchangeapp.model.Company;
  *
  * @author blazej
  */
-public class PriceDetailsDialogController implements Initializable {
+public class StockDetailsDialogController implements Initializable {
 
     
     private Stage dialogStage;
@@ -54,6 +49,8 @@ public class PriceDetailsDialogController implements Initializable {
     @FXML
     private Label firstListingDate;
     @FXML
+    private Label currency;
+    @FXML
     private Label memberOfStockExchange;
     
     @FXML
@@ -63,22 +60,15 @@ public class PriceDetailsDialogController implements Initializable {
     @FXML
     private NumberAxis yAxis;
 
-    
-    
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
-        
-        // Set the dialog icon.
-       // this.dialogStage.getIcons().add(new Image("file:resources/images/edit.png"));
     }
     
     public void setCompanyFields(Company company) {
@@ -109,6 +99,7 @@ public class PriceDetailsDialogController implements Initializable {
         chairman.setText(company.getChairman());
         abbreviation.setText(company.getAbbreviation());
         firstListingDate.setText(company.getFirstListingDate());
+        currency.setText(company.getStockExchangeBelonging().getCurrency().getCode());
         memberOfStockExchange.setText(company.getStockExchangeBelonging().getName());
         
         XYChart.Series series = new XYChart.Series();
@@ -118,17 +109,11 @@ public class PriceDetailsDialogController implements Initializable {
         });
         
         lineChart.getData().add(series);
-               
-   
-        
+        lineChart.setLegendVisible(false);
     }
        
     @FXML
     private void handleOk() {
         dialogStage.close();
-
-
-    }
-   
-    
+    }    
 }

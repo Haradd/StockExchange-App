@@ -39,6 +39,8 @@ public class CommodityDetailsDialogController implements Initializable {
     private Label turnover;
     @FXML
     private Label unitsNumber;
+    @FXML
+    private Label unit;
 
     
     @FXML
@@ -84,6 +86,7 @@ public class CommodityDetailsDialogController implements Initializable {
         max.setText(String.valueOf(commodity.getMax()));
         turnover.setText(String.valueOf(commodity.getTurnoverValue()));
         volume.setText(String.valueOf(commodity.getVolume()));
+        unit.setText(commodity.getUnit());
         unitsNumber.setText(String.valueOf(commodity.getCommoditiesCount()));
         
         XYChart.Series series = new XYChart.Series();
