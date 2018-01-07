@@ -30,12 +30,6 @@ public class RootLayoutController {
     private void handleGoToControlPanel(){
         app.showControlPanel();
     }
-    
-    @FXML
-    private void handleNew() {
-        app.getCompanyData().clear();
-        app.setFilePath(null);
-    }
 
     @FXML
     private void handleOpen() {
