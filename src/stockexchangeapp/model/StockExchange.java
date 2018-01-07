@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package stockexchangeapp.model;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,8 +17,9 @@ public class StockExchange extends Market {
     private StringProperty country;
     private StringProperty city;
     private StringProperty address;
-    private List<Index> indexes;
+    
     private List<Company> companies;
+    private List<Investor> investors;
     
     public StockExchange(String name, Double fee, String symbol, Currency currency, String country, String city, String address ) {
         super(name, fee);
@@ -31,8 +28,8 @@ public class StockExchange extends Market {
         this.country = new SimpleStringProperty(country);
         this.city = new SimpleStringProperty(city);
         this.address = new SimpleStringProperty(address);
-        this.indexes = new ArrayList<Index>();
-        this.companies = new ArrayList<Company>();
+        this.companies = new ArrayList<>();
+        this.investors = new ArrayList<>();
         
     }
     
@@ -104,14 +101,16 @@ public class StockExchange extends Market {
     }
     
     
-    public List<Company> getCompanies(){
-        return this.companies;
+    public List<Company> getCompanies() {
+        return companies;
     }
     
-    public void addCompanyToCompanies(Company company){
+    public void addCompanyToCompanies(Company company) {
         this.companies.add(company);
     }
     
-    
+    public List<Investor> getInvestors() {
+        return investors;
+    }    
     
 }
