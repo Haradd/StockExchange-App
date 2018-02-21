@@ -73,7 +73,7 @@
                               <Insets bottom="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleDeleteStockExchange" prefHeight="25.0" prefWidth="114.0" text="Edit">
+                        <Button mnemonicParsing="false" onAction="#handleEditStockExchange" prefHeight="25.0" prefWidth="114.0" text="Edit">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" top="5.0" />
                            </HBox.margin>
