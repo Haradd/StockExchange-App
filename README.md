@@ -24,8 +24,8 @@ Here you can manage the app.
 
 ## Stocks and details
 
-![Stocks](https://github.com/Haradd/StockExchange-App/blob/master/screenshots/stocks.png?raw=true)
 ![Details](https://github.com/Haradd/StockExchange-App/blob/master/screenshots/stock-details.png?raw=true)
+![Stocks](https://github.com/Haradd/StockExchange-App/blob/master/screenshots/stocks.png?raw=true)
 
 
 
